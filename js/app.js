@@ -12,6 +12,8 @@ console.log("Star Chasers up and running...")
 // 	}
 // 	chooseCharacter(i){
 // 		this.character = characters[i];
+// 		this.charIcon = charIcons[i];
+// 		this.diceBlock = diceBlocks[i];
 // 	}
 // }
 
@@ -20,23 +22,37 @@ console.log("Star Chasers up and running...")
 
 const player1 = {
 	character: "",
+	charIcon: "",
 	diceBlock: [],
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
 	chooseCharacter(i){
 		this.character = characters[i];
+		this.charIcon = `<span><img id="p1Icon" class="pIcon" src=${charIcons[i]}></span>`;
+		this.diceBlock = diceBlocks[i];
+	},
+	rollDice(){
+		const randomIdx = (Math.floor(Math.random()*6));
+		return this.diceBlock[randomIdx];
 	}
 };
 
 const player2 = {
 	character: "",
+	charIcon: "",
 	diceBlock: [],
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
 	chooseCharacter(i){
 		this.character = characters[i];
+		this.charIcon = `<span><img id="p2Icon" class="pIcon" src=${charIcons[i]}></span>`;
+		this.diceBlock = diceBlocks[i];
+	},
+	rollDice(){
+		const randomIdx = (Math.floor(Math.random()*6));
+		return this.diceBlock[randomIdx];
 	}
 };
 
@@ -51,12 +67,15 @@ const diceBlocks = [
 [3, 3, 3, 4, 4, 4]
 ];
 
-// const diceBlock1 = [1, 2, 3, 4, 5, 6];
-// const diceBlock2 = [0, 2, 4, 4, 4, 6];
-// const diceBlock3 = [1, 3, 3, 3, 5, 6];
-// const diceBlock4 = [3, 3, 3, 4, 4, 4];
+// 8biticon.com icons
+const charIcons = [
+"images/icon0.jpg",
+"images/icon1.jpg",
+"images/icon2.jpg",
+"images/icon3.jpg"
+];
 
-// Star
+// Star element
 const star = `<span><img id="star" src="images/star.png"></span>`;
 
 // Have star appear on a random spot on the map
@@ -64,11 +83,13 @@ function spawnStar(){
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".col-1").eq(randomIndex);
 	randomSpot.append(star);
-}
+}	
 
 // remove the star from the board when it is captured
 function removeStar(){
 	$("#star").parent().remove();
 }
+
+
 
 
