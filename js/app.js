@@ -57,5 +57,18 @@ const diceBlocks = [
 // const diceBlock4 = [3, 3, 3, 4, 4, 4];
 
 // Star
-const star = `<img id="star" src="star.png">`;
+const star = `<span><img id="star" src="images/star.png"></span>`;
+
+// Have star appear on a random spot on the map
+function spawnStar(){
+	const randomIndex = Math.floor(Math.random()*40);
+	const randomSpot = $(".col-1").eq(randomIndex);
+	randomSpot.append(star);
+}
+
+// remove the star from the board when it is captured
+function removeStar(){
+	$("#star").parent().remove();
+}
+
 
