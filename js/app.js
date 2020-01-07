@@ -69,10 +69,8 @@ const player1 = {
 		this.character = characters[i];
 		this.charIcon = `<span><img id="p1Icon" class="pIcon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
-		$('#p1Icon').remove();
+		$('#p1Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
-		// const positionString = this.currentPosition.toString();
-		// $(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
 	// Player 1 rolls 1 die
@@ -80,6 +78,7 @@ const player1 = {
 		const randomIdx = (Math.floor(Math.random()*6));
 		return this.diceBlock[randomIdx];
 	},
+
 	// Calculate new position based on dice roll
 	// calculateNewPosition(){
 	// 	this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
@@ -96,7 +95,7 @@ const player1 = {
 		} else{
 			positionString = this.currentPosition.toString();
 		}
-		$('#p1Icon').remove();
+		$('#p1Icon').parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
@@ -107,6 +106,19 @@ const player1 = {
 			this.starCount += 1;
 			spawnStar();
 		}
+	},
+
+	checkColor(){
+		const posString = this.currentPosition.toString();
+		if ($(`div:contains( ${posString} )`).hasClass('green')){
+			console.log("green!");
+		} else if ($(`div:contains( ${posString} )`).hasClass('red')){
+			console.log("red!");
+		} else if ($(`div:contains( ${posString} )`).hasClass('yellow')){
+			console.log("yellow!");
+		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){
+			console.log("blue!");
+		};
 	},
 
 	// Full move; run this when player clicks roll button
@@ -125,17 +137,6 @@ const player1 = {
 		console.log(this.currentPosition); // testing purposes
 	},
 
-	checkColor(){
-		if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('green')){
-			console.log("green!");
-		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('red')){
-			console.log("red!");
-		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('yellow')){
-			console.log("yellow!");
-		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('blue')){
-			console.log("blue!");
-		};
-	},
 	
 };
 
@@ -151,7 +152,7 @@ const player2 = {
 		this.character = characters[i];
 		this.charIcon = `<span><img id="p2Icon" class="pIcon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
-		$('#p2Icon').remove();
+		$('#p2Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
 	},
 
@@ -177,7 +178,7 @@ const player2 = {
 		} else{
 			positionString = this.currentPosition.toString();
 		}
-		$('#p2Icon').remove();
+		$('#p2Icon').parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
@@ -189,6 +190,20 @@ const player2 = {
 			spawnStar();
 
 		}
+
+	},
+
+	checkColor(){
+		const posString = this.currentPosition.toString();
+		if ($(`div:contains( ${posString} )`).hasClass('green')){
+			console.log("green!");
+		} else if ($(`div:contains( ${posString} )`).hasClass('red')){
+			console.log("red!");
+		} else if ($(`div:contains( ${posString} )`).hasClass('yellow')){
+			console.log("yellow!");
+		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){
+			console.log("blue!");
+		};
 	},
 
 	// Full move; run this when player clicks roll button
@@ -207,25 +222,15 @@ const player2 = {
 		console.log(this.currentPosition); // testing purposes
 	},
 
-	checkColor(){
-		if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('green')){
-			console.log("green!");
-		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('red')){
-			console.log("red!");
-		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('yellow')){
-			console.log("yellow!");
-		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('blue')){
-			console.log("blue!");
-		};
-	},
-	
+
 };
 
 /* ========================== Game Functions ================================ */
 
 // Have star appear on a random spot on the map
 function spawnStar(){
-	$("#star").parent().remove(); // remove star from board first 
+	// $("#star").parent().remove(); // remove star from board first 
+	$('#starspan').remove();
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".col-1").eq(randomIndex);
 	randomSpot.prepend(star);
@@ -239,8 +244,8 @@ function spawnStar(){
 /* ========================== Testing ================================ */
 
 // Initialize game
-player1.chooseCharacter(0);
 player2.chooseCharacter(2);
+player1.chooseCharacter(0);
 
 spawnStar();
 
