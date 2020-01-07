@@ -15,6 +15,16 @@ console.log("Star Chasers up and running...")
 // 		this.charIcon = charIcons[i];
 // 		this.diceBlock = diceBlocks[i];
 // 	}
+// 	rollDice(){
+// 		const randomIdx = (Math.floor(Math.random()*6));
+// 		return this.diceBlock[randomIdx];
+// 	},
+// 	calculateNewPosition(){
+// 		this.currentPosition = this.currentPosition + this.rollDice() + this.rollDice();
+// 		if(this.currentPosition > 40){
+// 			this.currentPosition = this.currentPosition % 40;
+// 		}
+// 	},
 // }
 
 // player1 = new Player;
@@ -27,15 +37,38 @@ const player1 = {
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
+	// Player 1 chooses a character
 	chooseCharacter(i){
 		this.character = characters[i];
 		this.charIcon = `<span><img id="p1Icon" class="pIcon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
+		this.movePiece();
 	},
-	rollDice(){
+	// Player 1 rolls 1 die
+	rollDie(){
 		const randomIdx = (Math.floor(Math.random()*6));
 		return this.diceBlock[randomIdx];
-	}
+	},
+	// Calculate new position based on dice roll
+	calculateNewPosition(){
+		this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
+		if(this.currentPosition > 40){
+			this.currentPosition = this.currentPosition % 40;
+		};
+	},
+	// Move player 1's piece on the board
+	movePiece(){
+		$('#p1Icon').remove();
+		const positionString = this.currentPosition.toString();
+		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
+	},
+
+	// Full turn
+	fullMove(){		//run this when roll button is clicked 
+		this.calculateNewPosition();
+		this.movePiece();
+	},
+	
 };
 
 const player2 = {
@@ -45,15 +78,38 @@ const player2 = {
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
+	// Player 2 chooses a character
 	chooseCharacter(i){
 		this.character = characters[i];
 		this.charIcon = `<span><img id="p2Icon" class="pIcon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
+		this.movePiece();
 	},
-	rollDice(){
+	// Player 2 rolls 1 die
+	rollDie(){
 		const randomIdx = (Math.floor(Math.random()*6));
 		return this.diceBlock[randomIdx];
-	}
+	},
+	// Calculate new position based on dice roll
+	calculateNewPosition(){
+		this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
+		if(this.currentPosition > 40){
+			this.currentPosition = this.currentPosition % 40;
+		}
+	},
+	// Move player 2's piece on the board
+	movePiece(){
+		$('#p2Icon').remove();
+		const positionString = this.currentPosition.toString();
+		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
+	},
+
+	// Full turn
+	fullMove(){		//run this when roll button is clicked 
+		this.calculateNewPosition();
+		this.movePiece();
+	},
+	
 };
 
 // Characters
@@ -82,7 +138,7 @@ const star = `<span><img id="star" src="images/star.png"></span>`;
 function spawnStar(){
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".col-1").eq(randomIndex);
-	randomSpot.append(star);
+	randomSpot.prepend(star);
 }	
 
 // remove the star from the board when it is captured
@@ -91,5 +147,9 @@ function removeStar(){
 }
 
 
+// Testing
+player1.chooseCharacter(0);
+player2.chooseCharacter(2);
 
+spawnStar();
 
