@@ -89,7 +89,42 @@ body {
 	max-height: 50%;
 	max-width: 50%;
 	overflow: hidden;
-	/*float: left;*/
-	/*position: absolute;*/
-	/*top: 0;*/
+}
+
+#diceboard {
+	height: 40%;
+	border-bottom: : 5px solid black;
+}
+
+#scoreboard {
+	height: 50%;
+	border-top: 5px solid black;
+}
+
+#dice__container--1 {
+	background-color: teal;
+	position: relative;
+	border: 2px solid goldenrod;
+	margin: 0 15px;
+}
+
+#dice__container--2 {
+	background-color: teal;
+	position: relative;
+	border: 2px solid goldenrod;
+	margin: 0 15px;
+}
+
+#rollbutton__container {
+	background-color: purple;
+	border: 2px solid goldenrod;
+}
+
+.dice__image {
+	height: 50%;
+	width: 43%;
+	position: absolute;
+	top: 25%;
+	left: 27%;
+
 }
