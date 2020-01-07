@@ -1,6 +1,33 @@
 console.log("Star Chasers up and running...")
 
-// Player Objects
+/* =================== Variables ====================== */
+
+// Characters
+const characters = ["Axel", "Bolt", "Iggy", "Speedy"];
+
+// Dice blocks
+const diceBlocks = [
+[1, 2, 3, 4, 5, 6],
+[0, 2, 4, 4, 4, 6],
+[1, 3, 3, 3, 5, 6],
+[3, 3, 3, 4, 4, 4]
+];
+
+// 8biticon.com icons
+const charIcons = [
+"images/icon0.jpg",
+"images/icon1.jpg",
+"images/icon2.jpg",
+"images/icon3.jpg"
+];
+
+// Star element
+const star = `<span id="starspan"><img id="star" src="images/star.png"></span>`;
+
+// Round counter
+let roundNumber = 1;
+
+/* =================== Player Objects =================== */
 
 // class Player {
 // 	constructor(){
@@ -67,6 +94,15 @@ const player1 = {
 	fullMove(){		//run this when roll button is clicked 
 		this.calculateNewPosition();
 		this.movePiece();
+		this.captureStar();
+	},
+
+	// Capture a star
+	captureStar(){
+		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
+			this.starCount += 1;
+			spawnStar();
+		}
 	},
 	
 };
@@ -108,43 +144,33 @@ const player2 = {
 	fullMove(){		//run this when roll button is clicked 
 		this.calculateNewPosition();
 		this.movePiece();
+		this.captureStar();
+	},
+
+	// Capture a star
+	captureStar(){
+		if($('#p2Icon').parent().next().attr('id') === 'starspan'){
+			this.starCount += 1;
+			spawnStar();
+		}
 	},
 	
 };
 
-// Characters
-const characters = ["Axel", "Bolt", "Iggy", "Speedy"];
-
-// Dice blocks
-const diceBlocks = [
-[1, 2, 3, 4, 5, 6],
-[0, 2, 4, 4, 4, 6],
-[1, 3, 3, 3, 5, 6],
-[3, 3, 3, 4, 4, 4]
-];
-
-// 8biticon.com icons
-const charIcons = [
-"images/icon0.jpg",
-"images/icon1.jpg",
-"images/icon2.jpg",
-"images/icon3.jpg"
-];
-
-// Star element
-const star = `<span><img id="star" src="images/star.png"></span>`;
+/* ========================== Game Functions ================================ */
 
 // Have star appear on a random spot on the map
 function spawnStar(){
+	$("#star").parent().remove(); // remove star from board first 
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".col-1").eq(randomIndex);
 	randomSpot.prepend(star);
 }	
 
 // remove the star from the board when it is captured
-function removeStar(){
-	$("#star").parent().remove();
-}
+// function removeStar(){
+// 	$("#star").parent().remove();
+// }
 
 
 // Testing
