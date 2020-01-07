@@ -91,7 +91,7 @@ const player1 = {
 	// Move player 1's piece on the board
 	movePiece(){
 		let positionString;
-		if(this.currentPosition > 40){
+		if(this.currentPosition > 40){		// edge case: set correct position
 			positionString = (this.currentPosition % 40).toString();
 		} else{
 			positionString = this.currentPosition.toString();
@@ -100,9 +100,10 @@ const player1 = {
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
-	// Capture a star
-	captureStar(){
+	// Check space for star and capture if present
+	checkForStar(){
 		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
+			console.log("Found a star!");
 			this.starCount += 1;
 			spawnStar();
 		}
@@ -114,9 +115,14 @@ const player1 = {
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
 			this.movePiece();
-			this.captureStar();
+			this.checkForStar();
+		}
+		// edge case: set correct position
+		if(this.currentPosition > 40){
+			this.currentPosition = this.currentPosition % 40;
 		}
 		this.checkColor();
+		console.log(this.currentPosition); // testing purposes
 	},
 
 	checkColor(){
@@ -166,7 +172,7 @@ const player2 = {
 	// Move player 2's piece on the board
 	movePiece(){
 		let positionString;
-		if(this.currentPosition > 40){
+		if(this.currentPosition > 40){		// edge case: set correct position
 			positionString = (this.currentPosition % 40).toString();
 		} else{
 			positionString = this.currentPosition.toString();
@@ -175,11 +181,13 @@ const player2 = {
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
-	// Capture a star
-	captureStar(){
+	// Check space for star and capture if present
+	checkForStar(){
 		if($('#p2Icon').parent().next().attr('id') === 'starspan'){
+			console.log("Found a star!");
 			this.starCount += 1;
 			spawnStar();
+
 		}
 	},
 
@@ -189,9 +197,14 @@ const player2 = {
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
 			this.movePiece();
-			this.captureStar();
+			this.checkForStar();
+		}
+		// edge case: set correct position
+		if(this.currentPosition > 40){
+			this.currentPosition = this.currentPosition % 40;
 		}
 		this.checkColor();
+		console.log(this.currentPosition); // testing purposes
 	},
 
 	checkColor(){
