@@ -69,7 +69,11 @@ const player1 = {
 		this.character = characters[i];
 		this.charIcon = `<span><img id="p1Icon" class="pIcon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
-		this.movePiece();
+		$('#p1Icon').remove();
+		$(`div:contains(" 1 ")`).prepend(this.charIcon);
+		// const positionString = this.currentPosition.toString();
+		// $(`div:contains( ${positionString} )`).prepend(this.charIcon);
+		// this.movePiece();
 	},
 	// Player 1 rolls 1 die
 	rollDie(){
@@ -77,25 +81,48 @@ const player1 = {
 		return this.diceBlock[randomIdx];
 	},
 	// Calculate new position based on dice roll
-	calculateNewPosition(){
-		this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
-		if(this.currentPosition > 40){
-			this.currentPosition = this.currentPosition % 40;
-		};
+	// calculateNewPosition(){
+	// 	this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
+	// 	if(this.currentPosition > 40){
+	// 		this.currentPosition = this.currentPosition % 40;
+	// 	};
+	// },
+
+	fullMove(){
+		const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
+		while(this.currentPosition < newPosition){
+			this.currentPosition++;
+			// let positionString;
+			this.movePiece();
+			// if(this.currentPosition > 40){
+			// 	positionString = (this.currentPosition % 40).toString();
+			// } else{
+			// 	positionString = this.currentPosition.toString();
+			// }
+			// $('#p1Icon').remove();
+			// $(`div:contains( ${positionString} )`).prepend(this.charIcon);
+			this.captureStar();
+		}
 	},
+
 	// Move player 1's piece on the board
 	movePiece(){
+		let positionString;
+		if(this.currentPosition > 40){
+			positionString = (this.currentPosition % 40).toString();
+		} else{
+			positionString = this.currentPosition.toString();
+		}
 		$('#p1Icon').remove();
-		const positionString = this.currentPosition.toString();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
 	// Full turn
-	fullMove(){		//run this when roll button is clicked 
-		this.calculateNewPosition();
-		this.movePiece();
-		this.captureStar();
-	},
+	// fullMove(){		//run this when roll button is clicked 
+	// 	this.calculateNewPosition();
+	// 	this.movePiece();
+	// 	this.captureStar();
+	// },
 
 	// Capture a star
 	captureStar(){
@@ -119,7 +146,9 @@ const player2 = {
 		this.character = characters[i];
 		this.charIcon = `<span><img id="p2Icon" class="pIcon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
-		this.movePiece();
+		// this.movePiece();
+		$('#p2Icon').remove();
+		$(`div:contains(" 1 ")`).prepend(this.charIcon);
 	},
 	// Player 2 rolls 1 die
 	rollDie(){
