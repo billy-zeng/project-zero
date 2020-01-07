@@ -64,7 +64,7 @@ const player1 = {
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
-	// Player 1 chooses a character
+	// Player 1 chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
 		this.charIcon = `<span><img id="p1Icon" class="pIcon" src=${charIcons[i]}></span>`;
@@ -73,8 +73,8 @@ const player1 = {
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
 		// const positionString = this.currentPosition.toString();
 		// $(`div:contains( ${positionString} )`).prepend(this.charIcon);
-		// this.movePiece();
 	},
+
 	// Player 1 rolls 1 die
 	rollDie(){
 		const randomIdx = (Math.floor(Math.random()*6));
@@ -88,23 +88,6 @@ const player1 = {
 	// 	};
 	// },
 
-	fullMove(){
-		const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
-		while(this.currentPosition < newPosition){
-			this.currentPosition++;
-			// let positionString;
-			this.movePiece();
-			// if(this.currentPosition > 40){
-			// 	positionString = (this.currentPosition % 40).toString();
-			// } else{
-			// 	positionString = this.currentPosition.toString();
-			// }
-			// $('#p1Icon').remove();
-			// $(`div:contains( ${positionString} )`).prepend(this.charIcon);
-			this.captureStar();
-		}
-	},
-
 	// Move player 1's piece on the board
 	movePiece(){
 		let positionString;
@@ -117,19 +100,35 @@ const player1 = {
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
-	// Full turn
-	// fullMove(){		//run this when roll button is clicked 
-	// 	this.calculateNewPosition();
-	// 	this.movePiece();
-	// 	this.captureStar();
-	// },
-
 	// Capture a star
 	captureStar(){
 		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
 			this.starCount += 1;
 			spawnStar();
 		}
+	},
+
+	// Full move; run this when player clicks roll button
+	fullMove(){
+		const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
+		while(this.currentPosition < newPosition){
+			this.currentPosition++;
+			this.movePiece();
+			this.captureStar();
+		}
+		this.checkColor();
+	},
+
+	checkColor(){
+		if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('green')){
+			console.log("green!");
+		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('red')){
+			console.log("red!");
+		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('yellow')){
+			console.log("yellow!");
+		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('blue')){
+			console.log("blue!");
+		};
 	},
 	
 };
@@ -141,39 +140,39 @@ const player2 = {
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
-	// Player 2 chooses a character
+	// Player 2 chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
 		this.charIcon = `<span><img id="p2Icon" class="pIcon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
-		// this.movePiece();
 		$('#p2Icon').remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
 	},
+
 	// Player 2 rolls 1 die
 	rollDie(){
 		const randomIdx = (Math.floor(Math.random()*6));
 		return this.diceBlock[randomIdx];
 	},
+
 	// Calculate new position based on dice roll
-	calculateNewPosition(){
-		this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
-		if(this.currentPosition > 40){
-			this.currentPosition = this.currentPosition % 40;
-		}
-	},
+	// calculateNewPosition(){
+	// 	this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
+	// 	if(this.currentPosition > 40){
+	// 		this.currentPosition = this.currentPosition % 40;
+	// 	}
+	// },
+
 	// Move player 2's piece on the board
 	movePiece(){
+		let positionString;
+		if(this.currentPosition > 40){
+			positionString = (this.currentPosition % 40).toString();
+		} else{
+			positionString = this.currentPosition.toString();
+		}
 		$('#p2Icon').remove();
-		const positionString = this.currentPosition.toString();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
-	},
-
-	// Full turn
-	fullMove(){		//run this when roll button is clicked 
-		this.calculateNewPosition();
-		this.movePiece();
-		this.captureStar();
 	},
 
 	// Capture a star
@@ -182,6 +181,29 @@ const player2 = {
 			this.starCount += 1;
 			spawnStar();
 		}
+	},
+
+	// Full move; run this when player clicks roll button
+	fullMove(){
+		const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
+		while(this.currentPosition < newPosition){
+			this.currentPosition++;
+			this.movePiece();
+			this.captureStar();
+		}
+		this.checkColor();
+	},
+
+	checkColor(){
+		if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('green')){
+			console.log("green!");
+		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('red')){
+			console.log("red!");
+		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('yellow')){
+			console.log("yellow!");
+		} else if ($(`div:contains( ${this.currentPosition.toString()} )`).hasClass('blue')){
+			console.log("blue!");
+		};
 	},
 	
 };
@@ -201,8 +223,9 @@ function spawnStar(){
 // 	$("#star").parent().remove();
 // }
 
+/* ========================== Testing ================================ */
 
-// Testing
+// Initialize game
 player1.chooseCharacter(0);
 player2.chooseCharacter(2);
 
