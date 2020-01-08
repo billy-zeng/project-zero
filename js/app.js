@@ -27,35 +27,10 @@ const star = `<span id="starspan"><img id="star" src="images/star.png"></span>`;
 // Round counter
 let roundNumber = 1;
 
+// Turn counter
+let turnNumber = 0; // iterate up to turn 29 => game ends
+
 /* =================== Player Objects =================== */
-
-// class Player {
-// 	constructor(){
-// 		this.character = "";
-// 		this.diceBlock = [];
-// 		this.currentPosition = 1;
-// 		this.coinCount: 0;
-// 		this.starCount = 0;
-// 	}
-// 	chooseCharacter(i){
-// 		this.character = characters[i];
-// 		this.charIcon = charIcons[i];
-// 		this.diceBlock = diceBlocks[i];
-// 	}
-// 	rollDice(){
-// 		const randomIdx = (Math.floor(Math.random()*6));
-// 		return this.diceBlock[randomIdx];
-// 	},
-// 	calculateNewPosition(){
-// 		this.currentPosition = this.currentPosition + this.rollDice() + this.rollDice();
-// 		if(this.currentPosition > 40){
-// 			this.currentPosition = this.currentPosition % 40;
-// 		}
-// 	},
-// }
-
-// player1 = new Player;
-// player2 = new Player;
 
 const player1 = {
 	character: "",
@@ -67,7 +42,7 @@ const player1 = {
 	// Player 1 chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
-		this.charIcon = `<span><img id="p1Icon" class="pIcon" src=${charIcons[i]}></span>`;
+		this.charIcon = `<span><img id="p1Icon" class="player__icon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
 		$('#p1Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
@@ -102,7 +77,7 @@ const player1 = {
 	// Check space for star and capture if present
 	checkForStar(){
 		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
-			console.log("Found a star!");
+			console.log("Found a star!"); // testing purposes
 			this.starCount += 1;
 			spawnStar();
 		}
@@ -110,16 +85,16 @@ const player1 = {
 
 	checkColor(){
 		const posString = this.currentPosition.toString();
-		if ($(`div:contains( ${posString} )`).hasClass('green')){
+		if ($(`div:contains( ${posString} )`).hasClass('green')){ // testing purposes
 			console.log("green!");
 			this.landOnGreen();
-		} else if ($(`div:contains( ${posString} )`).hasClass('red')){
+		} else if ($(`div:contains( ${posString} )`).hasClass('red')){ // testing purposes
 			console.log("red!");
 			this.landOnRed();
-		} else if ($(`div:contains( ${posString} )`).hasClass('yellow')){
+		} else if ($(`div:contains( ${posString} )`).hasClass('yellow')){ // testing purposes
 			console.log("yellow!");
 			this.landOnYellow();
-		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){
+		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){ // testing purposes
 			console.log("blue!");
 		};
 	},
@@ -136,7 +111,7 @@ const player1 = {
 		if(this.currentPosition > 40){
 			this.currentPosition = this.currentPosition % 40;
 		}
-		console.log(`${this.character} advanced ${advanceSpaces} spaces`);
+		console.log(`${this.character} advanced ${advanceSpaces} spaces`); // testing purposes
 	},
 
 	landOnRed(){
@@ -148,17 +123,17 @@ const player1 = {
 		let positionString = this.currentPosition.toString();
 		$('#p1Icon').parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
-		console.log(`${this.character} moved back ${moveBackSpaces} spaces`);
+		console.log(`${this.character} moved back ${moveBackSpaces} spaces`); // testing purposes
 	},
 
 	landOnYellow(){
 		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
-		console.log(`${this.character} gained ${gainedCoins} coins`);
+		console.log(`${this.character} gained ${gainedCoins} coins`); // testing purposes
 	},
 
 	// Full move; run this when player clicks roll button
-	fullMove(){
+	playTurn(){
 		const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
@@ -169,9 +144,12 @@ const player1 = {
 		if(this.currentPosition > 40){
 			this.currentPosition = this.currentPosition % 40;
 		}
-		console.log(`landed on ${this.currentPosition}`);
+		console.log(`landed on ${this.currentPosition}`); // testing purposes
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
+
+		turnNumber++;
+		console.log(`Turn: ${turnNumber}`);
 	},
 
 };
@@ -186,7 +164,7 @@ const player2 = {
 	// Player 2 chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
-		this.charIcon = `<span><img id="p2Icon" class="pIcon" src=${charIcons[i]}></span>`;
+		this.charIcon = `<span><img id="p2Icon" class="player__icon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
 		$('#p2Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
@@ -197,14 +175,6 @@ const player2 = {
 		const randomIdx = (Math.floor(Math.random()*6));
 		return this.diceBlock[randomIdx];
 	},
-
-	// Calculate new position based on dice roll
-	// calculateNewPosition(){
-	// 	this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
-	// 	if(this.currentPosition > 40){
-	// 		this.currentPosition = this.currentPosition % 40;
-	// 	}
-	// },
 
 	// Move player 2's piece on the board
 	movePiece(){
@@ -279,7 +249,7 @@ const player2 = {
 	},
 
 	// Full move; run this when player clicks roll button
-	fullMove(){
+	playTurn(){
 		const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
@@ -293,6 +263,9 @@ const player2 = {
 		console.log(`landed on ${this.currentPosition}`);
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
+
+		turnNumber++;
+		console.log(`Turn: ${turnNumber}`);
 	},
 
 
@@ -305,7 +278,7 @@ function spawnStar(){
 	// $("#star").parent().remove(); // remove star from board first 
 	$('#starspan').remove();
 	const randomIndex = Math.floor(Math.random()*40);
-	const randomSpot = $(".col-1").eq(randomIndex);
+	const randomSpot = $(".gameboard__space").eq(randomIndex);
 	randomSpot.prepend(star);
 }	
 
@@ -322,3 +295,45 @@ player1.chooseCharacter(0);
 
 spawnStar();
 
+/* ========================== Event Listeners ================================ */
+
+$('.btn-success').on('click', function(){
+	if(turnNumber%2 === 0){
+		player1.playTurn();
+	} else {
+		player2.playTurn();
+	}
+});
+
+
+
+
+/* ========================== Player Class for OOP approach ================================ */
+
+// class Player {
+// 	constructor(){
+// 		this.character = "";
+// 		this.diceBlock = [];
+// 		this.currentPosition = 1;
+// 		this.coinCount: 0;
+// 		this.starCount = 0;
+// 	}
+// 	chooseCharacter(i){
+// 		this.character = characters[i];
+// 		this.charIcon = charIcons[i];
+// 		this.diceBlock = diceBlocks[i];
+// 	}
+// 	rollDice(){
+// 		const randomIdx = (Math.floor(Math.random()*6));
+// 		return this.diceBlock[randomIdx];
+// 	},
+// 	calculateNewPosition(){
+// 		this.currentPosition = this.currentPosition + this.rollDice() + this.rollDice();
+// 		if(this.currentPosition > 40){
+// 			this.currentPosition = this.currentPosition % 40;
+// 		}
+// 	},
+// }
+
+// player1 = new Player;
+// player2 = new Player;
