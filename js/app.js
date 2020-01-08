@@ -125,7 +125,7 @@ const player1 = {
 	},
 
 	landOnGreen(){
-		const advanceSpaces = Math.floor(Math.random()*3 + 1);
+		const advanceSpaces = Math.floor(Math.random()*2 + 1);
 		const newPosition = this.currentPosition + advanceSpaces;
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
@@ -136,10 +136,11 @@ const player1 = {
 		if(this.currentPosition > 40){
 			this.currentPosition = this.currentPosition % 40;
 		}
+		console.log(`${this.character} advanced ${advanceSpaces} spaces`);
 	},
 
 	landOnRed(){
-		const moveBackSpaces = Math.floor(Math.random()*3 + 1);
+		const moveBackSpaces = Math.floor(Math.random()*2 + 1);
 		this.currentPosition -= moveBackSpaces;
 		if(this.currentPosition === 0){
 			this.currentPosition = 40;
@@ -147,11 +148,13 @@ const player1 = {
 		let positionString = this.currentPosition.toString();
 		$('#p1Icon').parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
+		console.log(`${this.character} moved back ${moveBackSpaces} spaces`);
 	},
 
 	landOnYellow(){
-		const gainedCoins = Math.floor(Math.random()*6 + 1);
+		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
+		console.log(`${this.character} gained ${gainedCoins} coins`);
 	},
 
 	// Full move; run this when player clicks roll button
@@ -166,6 +169,7 @@ const player1 = {
 		if(this.currentPosition > 40){
 			this.currentPosition = this.currentPosition % 40;
 		}
+		console.log(`landed on ${this.currentPosition}`);
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 	},
@@ -253,6 +257,7 @@ const player2 = {
 		if(this.currentPosition > 40){
 			this.currentPosition = this.currentPosition % 40;
 		}
+		console.log(`${this.character} advanced ${advanceSpaces} spaces`);
 	},
 
 	landOnRed(){
@@ -264,11 +269,13 @@ const player2 = {
 		let positionString = this.currentPosition.toString();
 		$('#p2Icon').parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
+		console.log(`${this.character} moved back ${moveBackSpaces} spaces`);
 	},
 
 	landOnYellow(){
-		const gainedCoins = Math.floor(Math.random()*6 + 1);
+		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
+		console.log(`${this.character} gained ${gainedCoins} coins`);
 	},
 
 	// Full move; run this when player clicks roll button
@@ -283,6 +290,7 @@ const player2 = {
 		if(this.currentPosition > 40){
 			this.currentPosition = this.currentPosition % 40;
 		}
+		console.log(`landed on ${this.currentPosition}`);
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 	},

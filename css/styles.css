@@ -18,6 +18,7 @@ body {
 	background-color: grey;
 	height: 80vh;
 	border: 2px solid white;
+	z-index: 2;
 }
 
 .green {
@@ -88,7 +89,22 @@ body {
 .pIcon {
 	max-height: 50%;
 	max-width: 50%;
-	overflow: hidden;
+	/*overflow: hidden;*/
+}
+
+.avatar {
+	position: relative;
+	height: 100%;
+	max-width: 40%;
+}
+
+.pAvatar {
+	height: 50%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	margin-bottom: 10px;
 }
 
 #diceboard {
@@ -128,7 +144,15 @@ body {
 	left: 30%;
 }
 
-.score {
+.scorecard {
 	background-color: floralwhite;
 	border: 2px solid chartreuse;
+	position: relative;
+}
+
+h2{
+	color: cyan;
+	left: 0;
+	position: absolute;
+	margin-left: 12px;
 }
