@@ -10,14 +10,14 @@ const diceBlocks = [
 [1, 2, 3, 4, 5, 6],
 [0, 2, 4, 4, 4, 6],
 [1, 3, 3, 3, 5, 6],
-[3, 3, 3, 4, 4, 4]
+[3, 3, 3, 3, 4, 4]
 ];
 
-const diceblockIcons = [
-[],
-[],
-[],
-[],
+const diceIcons = [
+['<i class="fas fa-dice-one"></i> <i class="fas fa-dice-two"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-five"></i> <i class="fas fa-dice-six"></i>'],
+['<i class="fas fa-square"></i> <i class="fas fa-dice-two"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-six"></i>'],
+['<i class="fas fa-dice-one"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-five"></i> <i class="fas fa-dice-six"></i>'],
+['<i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-four"></i>'],
 ];
 
 // 8biticon.com icons
@@ -48,6 +48,7 @@ const player1 = {
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
+
 	// Player 1 chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
@@ -55,6 +56,7 @@ const player1 = {
 		this.diceBlock = diceBlocks[i];
 		this.setPlayerAvatar(i);
 		this.setPlayerName(i);
+		this.setDiceIcons(i);
 		$('#p1Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
 	},
@@ -65,6 +67,10 @@ const player1 = {
 
 	setPlayerName(i){
 		$('#player1Avatar').prev().text(this.character);
+	},
+
+	setDiceIcons(i){
+		$('#p1__card .diceblock__icons').append(`<span>Dice Block: ${diceIcons[i]}</span>`)
 	},
 
 	// Player 1 rolls 1 die
@@ -98,6 +104,7 @@ const player1 = {
 		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!"); // testing purposes
 			this.starCount += 1;
+			$('#starCount1').text(`${this.starCount}`);
 			spawnStar();
 		}
 	},
@@ -148,6 +155,7 @@ const player1 = {
 	landOnYellow(){
 		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
+		$('#coinCount1').text(`${this.coinCount}`);
 		console.log(`${this.character} gained ${gainedCoins} coins`); // testing purposes
 	},
 
@@ -189,6 +197,7 @@ const player2 = {
 		this.diceBlock = diceBlocks[i];
 		this.setPlayerAvatar(i);
 		this.setPlayerName(i);
+		this.setDiceIcons(i);
 		$('#p2Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
 	},
@@ -199,6 +208,10 @@ const player2 = {
 
 	setPlayerName(i){
 		$('#player2Avatar').prev().text(this.character);
+	},
+
+	setDiceIcons(i){
+		$('#p2__card .diceblock__icons').append(`Dice Block: ${diceIcons[i]}`)
 	},
 
 	// Player 2 rolls 1 die
@@ -224,6 +237,7 @@ const player2 = {
 		if($('#p2Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!");
 			this.starCount += 1;
+			$('#starCount2').html(`${this.starCount}`);
 			spawnStar();
 
 		}
@@ -276,6 +290,7 @@ const player2 = {
 	landOnYellow(){
 		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
+		$('#coinCount1').text(`${this.coinCount}`);
 		console.log(`${this.character} gained ${gainedCoins} coins`);
 	},
 
@@ -311,13 +326,9 @@ function spawnStar(){
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".gameboard__space").eq(randomIndex);
 	randomSpot.prepend(star);
-}	;
+};
 
-// remove the star from the board when it is captured
-// function removeStar(){
-// 	$("#star").parent().remove();
-// }
-
+// run when player clicks a select button
 function handleCharSelect(x){
 	if(player1.selected === true){
 		player2.chooseCharacter(x);
@@ -329,15 +340,6 @@ function handleCharSelect(x){
 		$(`#selectButton${x}`).parent().remove();
 	}
 };
-
-// function setPlayer1Avatar(x){
-// 	$('#player1Avatar > img').attr('src', charIcons[x]);
-// }
-
-// function setPlayer1Avatar(x){
-// 	$('#player2Avatar > img').attr('src', charIcons[x]);
-// }
-
 
 /* ========================== Testing ================================ */
 
