@@ -13,6 +13,13 @@ const diceBlocks = [
 [3, 3, 3, 4, 4, 4]
 ];
 
+const diceblockIcons = [
+[],
+[],
+[],
+[],
+];
+
 // 8biticon.com icons
 const charIcons = [
 "images/icon0.jpg",
@@ -37,6 +44,7 @@ const player1 = {
 	character: "",
 	charIcon: "",
 	diceBlock: [],
+	selected: false,
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
@@ -45,8 +53,18 @@ const player1 = {
 		this.character = characters[i];
 		this.charIcon = `<span><img id=${this.iconId} class="player__icon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
+		this.setPlayerAvatar(i);
+		this.setPlayerName(i);
 		$('#p1Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
+	},
+
+	setPlayerAvatar(i){
+		$('#player1Avatar > img').attr('src', charIcons[i]);
+	},
+
+	setPlayerName(i){
+		$('#player1Avatar').prev().text(this.character);
 	},
 
 	// Player 1 rolls 1 die
@@ -160,6 +178,7 @@ const player2 = {
 	character: "",
 	charIcon: "",
 	diceBlock: [],
+	selected: false,
 	currentPosition: 1,
 	coinCount: 0,
 	starCount: 0,
@@ -168,8 +187,18 @@ const player2 = {
 		this.character = characters[i];
 		this.charIcon = `<span><img id=${this.iconId} class="player__icon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
+		this.setPlayerAvatar(i);
+		this.setPlayerName(i);
 		$('#p2Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
+	},
+
+	setPlayerAvatar(i){
+		$('#player2Avatar > img').attr('src', charIcons[i]);
+	},
+
+	setPlayerName(i){
+		$('#player2Avatar').prev().text(this.character);
 	},
 
 	// Player 2 rolls 1 die
@@ -282,24 +311,43 @@ function spawnStar(){
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".gameboard__space").eq(randomIndex);
 	randomSpot.prepend(star);
-}	
+}	;
 
 // remove the star from the board when it is captured
 // function removeStar(){
 // 	$("#star").parent().remove();
 // }
 
+function handleCharSelect(x){
+	if(player1.selected === true){
+		player2.chooseCharacter(x);
+		player2.selected = true;
+		$('#charSelectModal').css('display', 'none');
+	} else {
+		player1.chooseCharacter(x);
+		player1.selected = true;
+		$(`#selectButton${x}`).parent().remove();
+	}
+};
+
+// function setPlayer1Avatar(x){
+// 	$('#player1Avatar > img').attr('src', charIcons[x]);
+// }
+
+// function setPlayer1Avatar(x){
+// 	$('#player2Avatar > img').attr('src', charIcons[x]);
+// }
+
+
 /* ========================== Testing ================================ */
 
 // Initialize game
-player2.chooseCharacter(2);
-player1.chooseCharacter(0);
 
 spawnStar();
 
 /* ========================== Event Listeners ================================ */
 
-$('.btn-success').on('click', function(){
+$('.btn-info').on('click', function(){
 	if(turnNumber%2 === 0){
 		player1.playTurn();
 	} else {
@@ -309,14 +357,26 @@ $('.btn-success').on('click', function(){
 
 /* Modal button testing*/
 
-// When the user clicks on the button, open the modal
-$('#game-title').on('click', function() {
-  $('.modal').css('display', 'block');
+/* Select button listeners */
+
+// Select button 0
+$('#selectButton0').on('click', function(){
+	handleCharSelect(0);
 });
 
-// When the user clicks on <span> (x), close the modal
-$('.close').on('click', function() {
-  $('.modal').css('display', 'none');
+// Select button 1
+$('#selectButton1').on('click', function(){
+	handleCharSelect(1);
+});
+
+// Select button 2
+$('#selectButton2').on('click', function(){
+	handleCharSelect(2);
+});
+
+// Select button 3
+$('#selectButton3').on('click', function(){
+	handleCharSelect(3);
 });
 
 /* ========================== Player Class for OOP approach ================================ */
