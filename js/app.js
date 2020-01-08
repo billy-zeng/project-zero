@@ -307,8 +307,17 @@ $('.btn-success').on('click', function(){
 	}
 });
 
+/* Modal button testing*/
 
+// When the user clicks on the button, open the modal
+$('#game-title').on('click', function() {
+  $('.modal').css('display', 'block');
+});
 
+// When the user clicks on <span> (x), close the modal
+$('.close').on('click', function() {
+  $('.modal').css('display', 'none');
+});
 
 /* ========================== Player Class for OOP approach ================================ */
 
