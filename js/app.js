@@ -118,9 +118,40 @@ const player1 = {
 			this.landOnRed();
 		} else if ($(`div:contains( ${posString} )`).hasClass('yellow')){
 			console.log("yellow!");
+			this.landOnYellow();
 		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){
 			console.log("blue!");
 		};
+	},
+
+	landOnGreen(){
+		const advanceSpaces = Math.floor(Math.random()*3 + 1);
+		const newPosition = this.currentPosition + advanceSpaces;
+		while(this.currentPosition < newPosition){
+			this.currentPosition++;
+			this.movePiece();
+			this.checkForStar();
+		}
+		// edge case: set correct position
+		if(this.currentPosition > 40){
+			this.currentPosition = this.currentPosition % 40;
+		}
+	},
+
+	landOnRed(){
+		const moveBackSpaces = Math.floor(Math.random()*3 + 1);
+		this.currentPosition -= moveBackSpaces;
+		if(this.currentPosition === 0){
+			this.currentPosition = 40;
+		}
+		let positionString = this.currentPosition.toString();
+		$('#p1Icon').parent().remove();
+		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
+	},
+
+	landOnYellow(){
+		const gainedCoins = Math.floor(Math.random()*6 + 1);
+		this.coinCount += gainedCoins;
 	},
 
 	// Full move; run this when player clicks roll button
@@ -138,32 +169,6 @@ const player1 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 	},
-
-	landOnGreen(){
-		const advanceSpaces = Math.floor(Math.random()*2 + 1);
-		const newPosition = this.currentPosition + advanceSpaces;
-		while(this.currentPosition < newPosition){
-			this.currentPosition++;
-			this.movePiece();
-			this.checkForStar();
-		}
-		// edge case: set correct position
-		if(this.currentPosition > 40){
-			this.currentPosition = this.currentPosition % 40;
-		}
-	},
-
-	landOnRed(){
-		const moveBackSpaces = Math.floor(Math.random()*2 + 1);
-		this.currentPosition -= moveBackSpaces;
-		if(this.currentPosition === 0){
-			this.currentPosition = 40;
-		}
-		let positionString = this.currentPosition.toString();
-		$('#p1Icon').parent().remove();
-		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
-	},
-
 
 };
 
@@ -224,13 +229,46 @@ const player2 = {
 		const posString = this.currentPosition.toString();
 		if ($(`div:contains( ${posString} )`).hasClass('green')){
 			console.log("green!");
+			this.landOnGreen();
 		} else if ($(`div:contains( ${posString} )`).hasClass('red')){
 			console.log("red!");
+			this.landOnRed();
 		} else if ($(`div:contains( ${posString} )`).hasClass('yellow')){
 			console.log("yellow!");
+			this.landOnYellow();
 		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){
 			console.log("blue!");
 		};
+	},
+
+	landOnGreen(){
+		const advanceSpaces = Math.floor(Math.random()*2 + 1);
+		const newPosition = this.currentPosition + advanceSpaces;
+		while(this.currentPosition < newPosition){
+			this.currentPosition++;
+			this.movePiece();
+			this.checkForStar();
+		}
+		// edge case: set correct position
+		if(this.currentPosition > 40){
+			this.currentPosition = this.currentPosition % 40;
+		}
+	},
+
+	landOnRed(){
+		const moveBackSpaces = Math.floor(Math.random()*2 + 1);
+		this.currentPosition -= moveBackSpaces;
+		if(this.currentPosition === 0){
+			this.currentPosition = 40;
+		}
+		let positionString = this.currentPosition.toString();
+		$('#p2Icon').parent().remove();
+		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
+	},
+
+	landOnYellow(){
+		const gainedCoins = Math.floor(Math.random()*6 + 1);
+		this.coinCount += gainedCoins;
 	},
 
 	// Full move; run this when player clicks roll button

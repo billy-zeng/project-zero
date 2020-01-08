@@ -121,10 +121,14 @@ body {
 }
 
 .dice__image {
-	height: 50%;
-	width: 43%;
+	height: 100px;
+	width: 100px;
 	position: absolute;
 	top: 25%;
-	left: 27%;
+	left: 30%;
+}
 
+.score {
+	background-color: floralwhite;
+	border: 2px solid chartreuse;
 }
