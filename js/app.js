@@ -33,6 +33,7 @@ let turnNumber = 0; // iterate up to turn 29 => game ends
 /* =================== Player Objects =================== */
 
 const player1 = {
+	iconId: "p1Icon",
 	character: "",
 	charIcon: "",
 	diceBlock: [],
@@ -42,7 +43,7 @@ const player1 = {
 	// Player 1 chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
-		this.charIcon = `<span><img id="p1Icon" class="player__icon" src=${charIcons[i]}></span>`;
+		this.charIcon = `<span><img id=${this.iconId} class="player__icon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
 		$('#p1Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
@@ -155,6 +156,7 @@ const player1 = {
 };
 
 const player2 = {
+	iconId: "p2Icon",
 	character: "",
 	charIcon: "",
 	diceBlock: [],
@@ -164,7 +166,7 @@ const player2 = {
 	// Player 2 chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
-		this.charIcon = `<span><img id="p2Icon" class="player__icon" src=${charIcons[i]}></span>`;
+		this.charIcon = `<span><img id=${this.iconId} class="player__icon" src=${charIcons[i]}></span>`;
 		this.diceBlock = diceBlocks[i];
 		$('#p2Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);

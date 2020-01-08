@@ -1,19 +1,21 @@
 body {
 	background-color: #f1f1f1;
-	color: white;
 	text-align: center;
-	line-height: 68.59px;
 }
 
 .row {
 	height: 10vh;
 }
 
+/* =================================== Game Board =================================== */
+
 .gameboard__space {
 	height: 10vh;
 	position: relative;
 	opacity: 0.8;
 	border: 2px solid white;
+	line-height: 68.59px;
+	color: white;
 }
 
 #centerboard {
@@ -71,6 +73,8 @@ body {
     background-position: center;*/
 }
 
+/* =================================== Game Pieces =================================== */
+
 #star {
 	max-height: 50%;
 	max-width: 50%;
@@ -86,29 +90,11 @@ body {
 	border-radius: 10px;
 }
 
-.avatar__container {
-	position: relative;
-	height: 100%;
-	max-width: 40%;
-}
-
-.player__avatar {
-	height: 180px;
-	width: 180px;
-	border-radius: 20px;
-	position: absolute;
-	left: 0;
-	bottom: 8px;
-}
+/* =================================== Dice Board Section =================================== */
 
 #diceboard {
 	height: 40%;
 	border-bottom: : 5px solid black;
-}
-
-#scoreboard {
-	height: 50%;
-	border-top: 5px solid black;
 }
 
 .dice__container {
@@ -126,40 +112,88 @@ body {
 	border-radius: 22px;
 }
 
+/* =================================== Roll Button Section =================================== */
+
 #rollbutton__container {
 	background-color: purple;
 	border: 2px solid goldenrod;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
+}
+
+#turnCounter {
+	color: white;
+	top: 15px;
+	position: absolute;
+}
+
+/* =================================== Scoreboard Section =================================== */
+
+#scoreboard {
+	height: 50%;
+	border-top: 5px solid black;
 }
 
 .scorecard {
+	display: flex;
+	flex-direction: column;
 	background-color: floralwhite;
 	border: 2px solid chartreuse;
-	position: relative;
 }
 
-h3 {
+.scorecard__half {
+	display: flex;
+}
+
+.player__header {
+	padding-top: 10px;
+	width: 100%;
 	color: cyan;
-	left: 15px;
-	top: 5px;
-	position: absolute;
+	text-align: center;
+}
+
+.player__card--contents {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+}
+
+.left-section {
+  width: 40%;
+}
+
+.right-section {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2em;
+  color: black;
+  font-size: 18px;
 }
 
 .player__name {
 	color: maroon;
-	position: absolute;
-	left: 15px;
-	top: 42px;
 }
 
+.avatar__container {
+	max-height: 100%;
+	width: 100%;
+}
 
-.scorecard__half {
-	display: flex;
+.player__avatar {
+	height: 160px;
+	width: 160px;
+	border-radius: 20px;
+	border: solid 3px turquoise;
 }
 
 .player__stats {
 	flex-direction: column;
 	background-color: pink;
 }
+

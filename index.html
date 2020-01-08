@@ -45,25 +45,51 @@
 						<!-- dice 2 goes here -->
 						<img src="images/dice3.png" class="dice__image">
 					</div>
-					<div class="col-3" id="rollbutton__container"><button type="button" class="btn btn-success btn-lg roll__button">Roll Dice</button></div>
+					<div class="col-3" id="rollbutton__container">
+						<h3 id="turnCounter">Turn #</h3>
+						<button type="button" class="btn btn-success btn-lg roll__button">Roll Dice</button></div>
 				</section>
+
 				<section id="scoreboard" class="row">
 					<section id="p1__card" class="col-6 scorecard">
-						<h3 id="player1__title">Player 1</h3>
-						<h4 class="player__name">Axel</h4>
-						<!-- Player 1 avatar goes here -->
-						<div id="player1__avatar" class="avatar__container">
-							<img class="player__avatar" src="images/icon0.jpg">
+						<div class="player__header">	
+							<h3>Player 1</h3>
+						</div>
+						<div class="player__card--contents">
+							<div class="left-section">
+								<h4 class="player__name">Axel</h4>
+								<!-- Player 1 avatar goes here -->
+								<div id="player1__avatar" class="avatar__container">
+									<img class="player__avatar" src="images/icon0.jpg">
+								</div>
+							</div>
+							<div class="right-section">
+								<p class="diceblock__icons">Dice Block: <i class="fas fa-dice-one"></i> <i class="fas fa-dice-two"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-five"></i> <i class="fas fa-dice-six"></i></p>
+								<p class="coin__counter">Coins <i class="fas fa-coins"></i> : 0</p>
+								<p class="star__counter">Stars <i class="far fa-star"></i> : 0</p>
+							</div>
 						</div>
 					</section>
 					<section id="p2__card" class="col-6 scorecard">
-						<h3 id="player2__title">Player 2</h3>
-						<h4 class="player__name">Iggy</h4>
-						<!-- Player 2 avatar goes here -->
-						<div id="player2__avatar" class="avatar__container">
-							<img class="player__avatar" src="images/icon2.jpg">
+						<div class="player__header">	
+							<h3>Player 2</h3>
+						</div>
+						<div class="player__card--contents">
+							<div class="left-section">
+								<h4 class="player__name">Iggy</h4>
+								<!-- Player 2 avatar goes here -->
+								<div id="player2__avatar" class="avatar__container">
+									<img class="player__avatar" src="images/icon2.jpg">
+								</div>
+							</div>
+							<div class="right-section">
+								<p class="diceblock__icons">Dice Block: <i class="fas fa-dice-one"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-five"></i> <i class="fas fa-dice-six"></i></p>
+								<p class="coin__counter">Coins <i class="fas fa-coins"></i> : 0</p>
+								<p class="star__counter">Stars <i class="far fa-star"></i> : 0</p>
+							</div>
 						</div>
 					</section>
+
 				</section>
 			</section>
 			<div class="col-1 gameboard__space yellow"> 13 </div>
@@ -118,6 +144,19 @@
 			<div class="col-1 gameboard__space green"> 21 </div>
 		</section>
 	</section>
+
+<!-- Character selection modal -->
+
+<div id="characterSelectionModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h1>Please select your character</h1>
+  </div>
+
+</div>
+
 
 </body>
 </html>
