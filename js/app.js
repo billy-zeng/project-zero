@@ -107,10 +107,13 @@ const player1 = {
 	checkForStar(){
 		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!"); // testing purposes
+			setTimeout(function(){
+				alert(`You found a star!`);
+			}, 1150);
 			this.starCount += 1;
 			$('#starCount1').text(`${this.starCount}`);
 			spawnStar();
-		}
+		};
 	},
 
 	checkColor(){
@@ -256,12 +259,14 @@ const player2 = {
 	checkForStar(){
 		if($('#p2Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!");
+			setTimeout(function(){
+				alert('You found a star!');
+			}, 1150);
+			// alert(`${this.character} found a star!`);
 			this.starCount += 1;
 			$('#starCount2').html(`${this.starCount}`);
 			spawnStar();
-
-		}
-
+		};
 	},
 
 	checkColor(){
@@ -398,17 +403,27 @@ function spawnStar(){
 function animateDiceRoll(x, dieRoll){
 
 	// shake animation
-	$(`#diceImage${x}`).css('animation', "shake .4s ");
+	$(`#diceImage${x}`).css('animation', "shake 1.1s ");
+
+	let i=0; 
+	
+	timedLoop();
+
+	function timedLoop(){
+		setTimeout(function(){
+			$(`#diceImage${x}`).attr('src', `${diceImages[i]}`);
+			if(i<diceImages.length-1){
+				timedLoop();
+				i++;
+			};
+		}, 150);
+	};
 
 	setTimeout(function(){
-		// cycle through array of dice face images
-		for(let i=0; i<diceImages.length; i++){
-			$(`#diceImage${x}`).attr('src', `${diceImages[i]}`);
-		};
-		$(`#diceImage${x}`).css('animation', ""); // stop the shaking after looping through
-		$(`#diceImage${x}`).attr('src', `${diceImages[dieRoll]}`); // set the final image to the actual roll result
-	}
-	, 400);
+		$(`#diceImage${x}`).attr('src', `${diceImages[dieRoll]}`);
+		$(`#diceImage${x}`).css('animation', "");
+	}, 1100);
+
 };
 
 // iterate turn count
