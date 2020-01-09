@@ -112,12 +112,12 @@ body {
 
 #diceboard {
 	height: 40%;
-	border-bottom: : 5px solid black;
+	border-top : 3px solid #f1f1f1;
 }
 
 .dice__container {
 	/*background-color: teal;*/
-	border: 2px solid goldenrod;
+	/*border: 2px solid goldenrod;*/
 	margin: 0 15px;
 	display: flex;
 	align-items: center;
@@ -134,7 +134,9 @@ body {
 
 #rollbutton__container {
 	/*background-color: purple;*/
-	border: 2px solid goldenrod;
+	/*border: 2px solid goldenrod;*/
+	border-left: 3px solid #f1f1f1;
+	/*border-top: 3px solid #f1f1f1;*/
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -151,14 +153,18 @@ body {
 
 #scoreboard {
 	height: 50%;
-	border-top: 5px solid black;
+	border-top: 3px solid #f1f1f1;
 }
 
 .scorecard {
 	display: flex;
 	flex-direction: column;
 	/*background-color: floralwhite;*/
-	border: 2px solid chartreuse;
+	/*border: 2px solid chartreuse;*/
+}
+
+.scorecard:first-child {
+	border-right: 3px solid #f1f1f1;
 }
 
 .scorecard__half {
@@ -211,7 +217,7 @@ body {
 	height: 150px;
 	width: 150px;
 	border-radius: 20px;
-	border: solid 3px turquoise;
+	border: solid 3px #f1f1f1;
 }
 
 .player__stats {
