@@ -111,42 +111,76 @@ body {
 /* =================================== Dice Board Section =================================== */
 
 #diceboard {
-	height: 40%;
+	height: 43%;
 	border-top : 3px solid #f1f1f1;
+	color: #f1f1f1;
+	display: flex;
 }
 
 .dice__container {
-	/*background-color: teal;*/
-	/*border: 2px solid goldenrod;*/
-	margin: 0 15px;
+	/*margin: 0 15px;*/
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	width: 20%;
 }
 
 .dice__image {
-	height: 150px;
-	width: 150px;
+	height: 120px;
+	width: 120px;
 	border-radius: 22px;
 }
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+/* =================================== Result Message Section =================================== */
+
+.resultmessage__container {
+	align-items: center;
+	/*justify-content: center;*/
+	text-align: center;
+	width: 35%;
+	border-left: 3px solid #f1f1f1;
+	display: flex;
+	font-size: 1.5em;
+	padding: 1.5em;
+}
+
+.resultmessage_container > p {
+	margin: auto;
+	align-self: center;
+	/*font-size: 40px;*/
+}
+
 
 /* =================================== Roll Button Section =================================== */
 
 #turnCounter {
-	color: #f1f1f1;
-	top: 20px;
+	top: 35px;
 	position: absolute;
 }
 
-#rollbutton__container {
-	/*background-color: purple;*/
-	/*border: 2px solid goldenrod;*/
+.rollbutton__container {
 	border-left: 3px solid #f1f1f1;
-	/*border-top: 3px solid #f1f1f1;*/
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	text-align: center;
+	position: relative;
+	width: 25%;
 }
 
 .btn-info {
@@ -163,15 +197,13 @@ body {
 /* =================================== Scoreboard Section =================================== */
 
 #scoreboard {
-	height: 50%;
+	height: 47%;
 	border-top: 3px solid #f1f1f1;
 }
 
 .scorecard {
 	display: flex;
 	flex-direction: column;
-	/*background-color: floralwhite;*/
-	/*border: 2px solid chartreuse;*/
 }
 
 .scorecard:first-child {
@@ -185,7 +217,6 @@ body {
 .player__header {
 	padding-top: 10px;
 	width: 100%;
-	/*color: black;*/
 	text-align: center;
 }
 
@@ -194,30 +225,25 @@ body {
 }
 
 .player__card--contents {
-  width: 100%;
-  height: auto;
-  display: flex;
-  align-items: center;
+  	width: 100%;
+  	height: auto;
+  	display: flex;
+  	align-items: center;
 }
 
 .left-section {
-  width: 40%;
+  	width: 40%;
 }
 
 .right-section {
-  width: 60%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 2em;
-  /*color: black;*/
-  font-size: 18px;
+  	width: 60%;
+  	height: 100%;
+  	display: flex;
+  	flex-direction: column;
+  	justify-content: center;
+  	padding-top: 2em;
+  	font-size: 18px;
 }
-/*
-.player__name {
-	color: maroon;
-}*/
 
 .avatar__container {
 	max-height: 100%;
@@ -273,16 +299,16 @@ body {
 
 /* The Modal (background) */
 .modal {
-  display: block;  /* none to test; CHANGE BACK TO BLOCK later */
-  position: fixed; /* Stay in place */
-  z-index: 10; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: hidden;
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  	display: block;  /* none to test; CHANGE BACK TO BLOCK later */
+  	position: fixed; /* Stay in place */
+  	z-index: 10; /* Sit on top */
+  	left: 0;
+  	top: 0;
+  	width: 100%; /* Full width */
+  	height: 100%; /* Full height */
+  	overflow: hidden;
+  	background-color: rgb(0,0,0); /* Fallback color */
+  	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
@@ -309,7 +335,7 @@ body {
 .landingpage__contents {
 	display: flex;
 	width: 100%;
-	/*margin-bottom: 12px;*/
+	margin-bottom: 12px;
 }
 
 .landingpage__contents > p{
@@ -317,6 +343,7 @@ body {
 }
 
 .btn-light {
+	margin-bottom: 10px;
 	transition: transform 1s;
 }
 

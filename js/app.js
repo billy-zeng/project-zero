@@ -126,6 +126,7 @@ const player1 = {
 			this.landOnYellow();
 		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){ // testing purposes
 			console.log("blue!");
+			this.landOnBlue();
 		};
 	},
 
@@ -142,6 +143,8 @@ const player1 = {
 			this.currentPosition = this.currentPosition % 40;
 		}
 		console.log(`${this.character} advanced ${advanceSpaces} spaces`); // testing purposes
+
+		$('.resultmessage__container > p').text(`${this.character} landed on a green tile and advanced [${advanceSpaces}]!`);
 	},
 
 	landOnRed(){
@@ -154,6 +157,8 @@ const player1 = {
 		$('#p1Icon').parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 		console.log(`${this.character} moved back ${moveBackSpaces} spaces`); // testing purposes
+
+		$('.resultmessage__container > p').text(`${this.character} landed on a red tile and moved back [${moveBackSpaces}]`);
 	},
 
 	landOnYellow(){
@@ -161,14 +166,22 @@ const player1 = {
 		this.coinCount += gainedCoins;
 		$('#coinCount1').text(`${this.coinCount}`);
 		console.log(`${this.character} gained ${gainedCoins} coins`); // testing purposes
+
+		$('.resultmessage__container > p').html(`${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins">`);
+	},
+
+	landOnBlue(){
+		$('.resultmessage__container > p').text(`${this.character} landed on a blue tile!`);
 	},
 
 	// Full move; run this when player clicks roll button
 	playTurn(){
 		const dieRoll1 = this.rollDie();
-		$('#diceImage1').attr('src', `${diceImages[dieRoll1]}`);
+		animateDiceRoll(1, dieRoll1);
+		// $('#diceImage1').attr('src', `${diceImages[dieRoll1]}`);
 		const dieRoll2 = this.rollDie();
-		$('#diceImage2').attr('src', `${diceImages[dieRoll2]}`);
+		animateDiceRoll(2, dieRoll2);
+		// $('#diceImage2').attr('src', `${diceImages[dieRoll2]}`);
 		const newPosition = this.currentPosition + dieRoll1 + dieRoll2;
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
@@ -183,9 +196,7 @@ const player1 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
-		// turnNumber++;
-		// $('#turnCounter').text(`${turnNumber}`);
-		// console.log(`Turn: ${turnNumber}`);
+		handleNextTurn();
 	},
 
 };
@@ -266,6 +277,7 @@ const player2 = {
 			this.landOnYellow();
 		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){
 			console.log("blue!");
+			this.landOnBlue();
 		};
 	},
 
@@ -282,6 +294,8 @@ const player2 = {
 			this.currentPosition = this.currentPosition % 40;
 		}
 		console.log(`${this.character} advanced ${advanceSpaces} spaces`);
+
+		$('.resultmessage__container > p').text(`${this.character} landed on a green tile and advanced [${advanceSpaces}]!`);
 	},
 
 	landOnRed(){
@@ -294,6 +308,8 @@ const player2 = {
 		$('#p2Icon').parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 		console.log(`${this.character} moved back ${moveBackSpaces} spaces`);
+
+		$('.resultmessage__container > p').text(`${this.character} landed on a red tile and moved back [${moveBackSpaces}]`);
 	},
 
 	landOnYellow(){
@@ -301,14 +317,22 @@ const player2 = {
 		this.coinCount += gainedCoins;
 		$('#coinCount2').text(`${this.coinCount}`);
 		console.log(`${this.character} gained ${gainedCoins} coins`);
+
+		$('.resultmessage__container > p').html(`${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins">`);
+	},
+
+	landOnBlue(){
+		$('.resultmessage__container > p').text(`${this.character} landed on a blue tile!`);
 	},
 
 	// Full move; run this when player clicks roll button
 	playTurn(){
 		const dieRoll1 = this.rollDie();
-		$('#diceImage1').attr('src', `${diceImages[dieRoll1]}`);
+		animateDiceRoll(1, dieRoll1);
+		// $('#diceImage1').attr('src', `${diceImages[dieRoll1]}`);
 		const dieRoll2 = this.rollDie();
-		$('#diceImage2').attr('src', `${diceImages[dieRoll2]}`);
+		animateDiceRoll(2, dieRoll2);
+		// $('#diceImage2').attr('src', `${diceImages[dieRoll2]}`);
 		const newPosition = this.currentPosition + dieRoll1 + dieRoll2;
 		// const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
 		while(this.currentPosition < newPosition){
@@ -324,9 +348,7 @@ const player2 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
-		// turnNumber++;
-		// $('#turnCounter').text(`${turnNumber}`);
-		// console.log(`Turn: ${turnNumber}`);
+		handleNextTurn();
 	},
 
 
@@ -334,13 +356,10 @@ const player2 = {
 
 /* ========================== Game Functions ================================ */
 
-// Have star appear on a random spot on the map
-function spawnStar(){
-	// $("#star").parent().remove(); // remove star from board first 
-	$('#starspan').remove();
-	const randomIndex = Math.floor(Math.random()*40);
-	const randomSpot = $(".gameboard__space").eq(randomIndex);
-	randomSpot.prepend(star);
+// move from landing page to character selection
+function moveToCharSelect(){
+	$('#landingPageModal').css('display', 'none');
+	$('charSelectModal').css('display', 'block');
 };
 
 // run when player clicks a select button
@@ -352,7 +371,6 @@ function handleCharSelect(x){
 
 		$('#centerboard').css('background-image', "url('images/landingpage-background.jpg')");
 
-
 	} else {
 		player1.chooseCharacter(x);
 		player1.selected = true;
@@ -361,25 +379,64 @@ function handleCharSelect(x){
 	}
 };
 
+// Highlight text of current player to show whose turn it is
+function highlightCurrentPlayer(){
+	$('.player__header > h3 > span').eq(0).toggleClass('rainbow__text');
+	$('.player__header > h3 > span').eq(1).toggleClass('rainbow__text');
+};
+
+// Have star appear on a random spot on the map
+function spawnStar(){
+	// $("#star").parent().remove(); // remove star from board first 
+	$('#starspan').remove();
+	const randomIndex = Math.floor(Math.random()*40);
+	const randomSpot = $(".gameboard__space").eq(randomIndex);
+	randomSpot.prepend(star);
+};
+
+// Animation for dice roll
+function animateDiceRoll(x, dieRoll){
+
+	// shake animation
+	$(`#diceImage${x}`).css('animation', "shake .4s ");
+
+	setTimeout(function(){
+		// cycle through array of dice face images
+		for(let i=0; i<diceImages.length; i++){
+			$(`#diceImage${x}`).attr('src', `${diceImages[i]}`);
+		};
+		$(`#diceImage${x}`).css('animation', ""); // stop the shaking after looping through
+		$(`#diceImage${x}`).attr('src', `${diceImages[dieRoll]}`); // set the final image to the actual roll result
+	}
+	, 400);
+};
+
 // iterate turn count
 function handleNextTurn(){
 	turnNumber++;
 	$('#turnCounter').text(`Turn: ${turnNumber}`);
 	console.log(`Turn: ${turnNumber}`);
 	highlightCurrentPlayer();
-}
 
-// move from landing page to character selection
-function moveToCharSelect(){
-	$('#landingPageModal').css('display', 'none');
-	$('charSelectModal').css('display', 'block');
-}
+	// check if game is over
+	if(turnNumber >30){
+		handleGameEnd();
+	};
+};
 
-// Highlight text of current player to show whose turn it is
-function highlightCurrentPlayer(){
-	$('.player__header > h3 > span').eq(0).toggleClass('rainbow__text');
-	$('.player__header > h3 > span').eq(1).toggleClass('rainbow__text');
-}
+function handleGameEnd(){
+	let p1Total = player1.starCount + Math.floor(player1.coinCount/15);
+	let p2Total = player2.starCount + Math.floor(player2.coinCount/15);
+
+	if (p1Total > p2Total){
+		alert(`${player1.character} is the winner! With your help he collected a grand total of ${p1Total} stars.`)
+	} else if (p1Total > p2Total){
+		alert(`${player2.character} is the winner! With your help he collected a grand total of ${p2Total} stars.`)
+	} else {
+		alert(`It's a tie! Both players each collected a grand total of ${p1Total} stars.`)
+	};
+};
+
 
 /* ========================== Testing ================================ */
 
@@ -396,8 +453,6 @@ $('.btn-info').on('click', function(){
 	} else {
 		player1.playTurn();
 	}
-
-	handleNextTurn();
 });
 
 // Start button listener
