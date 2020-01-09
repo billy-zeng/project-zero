@@ -23,12 +23,13 @@ body {
 }
 
 .gameboard__space {
-	height: 10vh;
+	max-height: 10vh;
 	position: relative;
 	opacity: 0.8;
 	border: 2px solid white;
 	line-height: 68.59px;
 	color: white;
+	overflow: hidden;
 }
 
 #centerboard {
@@ -296,6 +297,14 @@ body {
 
 .landingpage__contents > p{
 	width: 100%;
+}
+
+.btn-light {
+	transition: transform 1s;
+}
+
+.btn-light:hover {
+	transform: scale(1.2);
 }
 
 /* ========================================================================================== */

@@ -299,7 +299,7 @@ const player2 = {
 	landOnYellow(){
 		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
-		$('#coinCount1').text(`${this.coinCount}`);
+		$('#coinCount2').text(`${this.coinCount}`);
 		console.log(`${this.character} gained ${gainedCoins} coins`);
 	},
 
