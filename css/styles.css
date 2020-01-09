@@ -32,10 +32,14 @@ body {
 }
 
 #centerboard {
-	background-color: grey;
+	background-color: #f1f1f1;
 	height: 80vh;
 	border: 2px solid white;
 	z-index: 2;
+
+	color: #f1f1f1;
+	/*background-image: url('../images/landingpage-background.jpg');*/
+	background-size: cover;
 }
 
 .green {
@@ -111,7 +115,7 @@ body {
 }
 
 .dice__container {
-	background-color: teal;
+	/*background-color: teal;*/
 	border: 2px solid goldenrod;
 	margin: 0 15px;
 	display: flex;
@@ -128,7 +132,7 @@ body {
 /* =================================== Roll Button Section =================================== */
 
 #rollbutton__container {
-	background-color: purple;
+	/*background-color: purple;*/
 	border: 2px solid goldenrod;
 	display: flex;
 	align-items: center;
@@ -152,7 +156,7 @@ body {
 .scorecard {
 	display: flex;
 	flex-direction: column;
-	background-color: floralwhite;
+	/*background-color: floralwhite;*/
 	border: 2px solid chartreuse;
 }
 
@@ -163,7 +167,7 @@ body {
 .player__header {
 	padding-top: 10px;
 	width: 100%;
-	color: black;
+	/*color: black;*/
 	text-align: center;
 }
 
@@ -189,13 +193,13 @@ body {
   flex-direction: column;
   justify-content: center;
   padding-top: 2em;
-  color: black;
+  /*color: black;*/
   font-size: 18px;
 }
-
+/*
 .player__name {
 	color: maroon;
-}
+}*/
 
 .avatar__container {
 	max-height: 100%;
@@ -250,8 +254,8 @@ body {
 }
 
 /* The Modal (background) */
-.charselect__modal {
-  display: hidden;  /* hidden to test; CHANGE BACK TO BLOCK later */
+.modal {
+  display: block;  /* none to test; CHANGE BACK TO BLOCK later */
   position: fixed; /* Stay in place */
   z-index: 10; /* Sit on top */
   left: 0;
@@ -265,13 +269,36 @@ body {
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #C0C0C0	; /* #fefefe */
-  margin: 8% auto; /* 8% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
-  display: flex;
+ 	background-color: #C0C0C0	; /* #fefefe */
+  	margin: 7% auto; /* 8% from the top and centered */
+  	padding: 20px;
+  	border: 3px solid #f1f1f1;
+  	width: 80%; /* Could be more or less, depending on screen size */
+  	display: flex;
+  	border-radius: 50px;
+
+	color: #f1f1f1;
+	background-image: url('../images/landingpage-background.jpg');
+	background-size: cover;
 }
+
+/* =================================== Landing Page Modal =================================== */
+
+.landingpage__header {
+	text-align: center;
+	margin-bottom: 10px;
+}
+.landingpage__contents {
+	display: flex;
+	width: 100%;
+	/*margin-bottom: 12px;*/
+}
+
+.landingpage__contents > p{
+	width: 100%;
+}
+
+/* ========================================================================================== */
 
 /* The Close Button */
 .close {
@@ -287,3 +314,6 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+

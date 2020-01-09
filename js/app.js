@@ -3,7 +3,7 @@ console.log("Star Chasers up and running...")
 /* =================== Variables ====================== */
 
 // Characters
-const characters = ["Axel", "Bolt", "Iggy", "Speedy"];
+const characters = ["Axel", "Jojo", "Iggy", "Speedy"];
 
 // Dice blocks
 const diceBlocks = [
@@ -349,12 +349,28 @@ function handleCharSelect(x){
 		player2.chooseCharacter(x);
 		player2.selected = true;
 		$('#charSelectModal').css('display', 'none');
+
+		$('#centerboard').css('background-image', "url('images/landingpage-background.jpg')");
+
+
 	} else {
 		player1.chooseCharacter(x);
 		player1.selected = true;
 		$(`#selectButton${x}`).parent().remove();
+		$('.charselect__section').css('width', '33.33%');
 	}
 };
+
+function handleNextTurn(){
+	turnNumber++;
+	$('#turnCounter').text(`Turn: ${turnNumber}`);
+	console.log(`Turn: ${turnNumber}`);
+}
+
+function moveToCharSelect(){
+	$('#landingPageModal').css('display', 'none');
+	$('charSelectModal').css('display', 'block');
+}
 
 /* ========================== Testing ================================ */
 
@@ -364,6 +380,7 @@ spawnStar();
 
 /* ========================== Event Listeners ================================ */
 
+// Roll button listener
 $('.btn-info').on('click', function(){
 	if(turnNumber%2 === 0){
 		player2.playTurn();
@@ -371,14 +388,15 @@ $('.btn-info').on('click', function(){
 		player1.playTurn();
 	}
 
-	turnNumber++;
-	$('#turnCounter').text(`Turn: ${turnNumber}`);
-	console.log(`Turn: ${turnNumber}`);
+	handleNextTurn();
 });
 
-/* Modal button testing*/
+// Start button listener
+$('.btn-light').on('click', function(){
+	moveToCharSelect();
+})
 
-/* Select button listeners */
+// Select button listeners 
 
 // Select button 0
 $('#selectButton0').on('click', function(){
