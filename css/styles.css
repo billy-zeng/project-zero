@@ -158,11 +158,13 @@ body {
 	display: flex;
 	font-size: 1.5em;
 	padding: 1.5em;
+	flex-direction: column;
 }
 
 .resultmessage_container > p {
 	margin: auto;
 	align-self: center;
+	width: 100%;
 	/*font-size: 40px;*/
 }
 

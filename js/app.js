@@ -37,6 +37,8 @@ const diceImages = ["images/dice0.png", "images/dice1.png", "images/dice2.png", 
 // Star element
 const star = `<span id="starspan"><img id="star" src="images/star.png"></span>`;
 
+let starsFound = 0;
+
 // Round counter
 let roundNumber = 1;
 
@@ -109,9 +111,11 @@ const player1 = {
 	checkForStar(){
 		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!"); // testing purposes
-			setTimeout(function(){
-				alert(`You found a star!`);
-			}, 1150);
+			starsFound++;
+
+			// setTimeout(function(){
+			// 	alert(`You found a star!`);
+			// }, 1150);
 			this.starCount += 1;
 			$('#starCount1').text(`${this.starCount}`);
 			spawnStar();
@@ -149,7 +153,7 @@ const player1 = {
 		}
 		console.log(`${this.character} advanced ${advanceSpaces} spaces`); // testing purposes
 
-		$('.resultmessage__container > p').text(`${this.character} landed on a green tile and advanced [${advanceSpaces}]!`);
+		$('.resultmessage__container').html(`${this.character} landed on a green tile and advanced [${advanceSpaces}]!</p>`);
 	},
 
 	landOnRed(){
@@ -163,7 +167,7 @@ const player1 = {
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 		console.log(`${this.character} moved back ${moveBackSpaces} spaces`); // testing purposes
 
-		$('.resultmessage__container > p').text(`${this.character} landed on a red tile and moved back [${moveBackSpaces}]`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a red tile and moved back [${moveBackSpaces}]</p>`);
 	},
 
 	landOnYellow(){
@@ -172,21 +176,20 @@ const player1 = {
 		$('#coinCount1').text(`${this.coinCount}`);
 		console.log(`${this.character} gained ${gainedCoins} coins`); // testing purposes
 
-		$('.resultmessage__container > p').html(`${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins">`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
 	},
 
 	landOnBlue(){
-		$('.resultmessage__container > p').text(`${this.character} landed on a blue tile!`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
 	},
 
 	// Full move; run this when player clicks roll button
 	playTurn(){
+		starsFound = 0;
 		const dieRoll1 = this.rollDie();
 		animateDiceRoll(1, dieRoll1);
-		// $('#diceImage1').attr('src', `${diceImages[dieRoll1]}`);
 		const dieRoll2 = this.rollDie();
 		animateDiceRoll(2, dieRoll2);
-		// $('#diceImage2').attr('src', `${diceImages[dieRoll2]}`);
 		const newPosition = this.currentPosition + dieRoll1 + dieRoll2;
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
@@ -201,6 +204,7 @@ const player1 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
+		handleStarFoundMessage()
 		handleNextTurn();
 	},
 
@@ -261,9 +265,10 @@ const player2 = {
 	checkForStar(){
 		if($('#p2Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!");
-			setTimeout(function(){
-				alert('You found a star!');
-			}, 1150);
+			starsFound++;
+			// setTimeout(function(){
+			// 	alert('You found a star!');
+			// }, 1150);
 			// alert(`${this.character} found a star!`);
 			this.starCount += 1;
 			$('#starCount2').html(`${this.starCount}`);
@@ -302,7 +307,7 @@ const player2 = {
 		}
 		console.log(`${this.character} advanced ${advanceSpaces} spaces`);
 
-		$('.resultmessage__container > p').text(`${this.character} landed on a green tile and advanced [${advanceSpaces}]!`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a green tile and advanced [${advanceSpaces}]!</p>`);
 	},
 
 	landOnRed(){
@@ -316,7 +321,7 @@ const player2 = {
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 		console.log(`${this.character} moved back ${moveBackSpaces} spaces`);
 
-		$('.resultmessage__container > p').text(`${this.character} landed on a red tile and moved back [${moveBackSpaces}]`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a red tile and moved back [${moveBackSpaces}]</p>`);
 	},
 
 	landOnYellow(){
@@ -325,23 +330,21 @@ const player2 = {
 		$('#coinCount2').text(`${this.coinCount}`);
 		console.log(`${this.character} gained ${gainedCoins} coins`);
 
-		$('.resultmessage__container > p').html(`${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins">`);
+		$('.resultmessage__container').html(`</p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
 	},
 
 	landOnBlue(){
-		$('.resultmessage__container > p').text(`${this.character} landed on a blue tile!`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
 	},
 
 	// Full move; run this when player clicks roll button
 	playTurn(){
+		starsFound = 0;
 		const dieRoll1 = this.rollDie();
 		animateDiceRoll(1, dieRoll1);
-		// $('#diceImage1').attr('src', `${diceImages[dieRoll1]}`);
 		const dieRoll2 = this.rollDie();
 		animateDiceRoll(2, dieRoll2);
-		// $('#diceImage2').attr('src', `${diceImages[dieRoll2]}`);
 		const newPosition = this.currentPosition + dieRoll1 + dieRoll2;
-		// const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
 			this.movePiece();
@@ -355,6 +358,7 @@ const player2 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
+		handleStarFoundMessage()
 		handleNextTurn();
 	},
 
@@ -398,6 +402,14 @@ function spawnStar(){
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".gameboard__space").eq(randomIndex);
 	randomSpot.prepend(star);
+};
+
+function handleStarFoundMessage(){
+	if(starsFound === 1){
+		$('.resultmessage__container > p').after(`You found a star! <i class="far fa-star"></i>`);
+	} else if (starsFound > 1){
+		$('.resultmessage__container > p').after(`You found ${starsFound} stars! <i class="far fa-star"></i>`);
+	}
 };
 
 // Animation for dice roll
