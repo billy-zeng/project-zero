@@ -300,7 +300,7 @@ body {
 
 /* The Modal (background) */
 .modal {
-  	display: block;  /* none to test; CHANGE BACK TO BLOCK later */
+  	display: block;
   	position: fixed; /* Stay in place */
   	z-index: 10; /* Sit on top */
   	left: 0;
@@ -328,6 +328,11 @@ body {
 }
 
 /* =================================== Landing Page Modal =================================== */
+
+.landingpage__modal {
+	z-index: 11; 
+ 	display: block;  /* none to test; CHANGE BACK TO BLOCK later */
+}
 
 .landingpage__header {
 	text-align: center;

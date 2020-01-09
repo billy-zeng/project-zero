@@ -2,8 +2,18 @@ console.log("Star Chasers up and running...")
 
 /* =================== Variables ====================== */
 
-// Characters
+// Character names
 const characters = ["Axel", "Jojo", "Rudy", "Speedy"];
+
+// 8biticon.com icons
+const charIcons = [
+"images/icon0.jpg",
+"images/icon1.jpg",
+"images/icon2.jpg",
+"images/icon3.jpg"
+];
+
+const charSelectModals = $('.charselect__section');
 
 // Dice blocks
 const diceBlocks = [
@@ -23,14 +33,6 @@ const diceIcons = [
 
 // images of the dice faces
 const diceImages = ["images/dice0.png", "images/dice1.png", "images/dice2.png", "images/dice3.png", "images/dice4.png", "images/dice5.png", "images/dice6.png"];
-
-// 8biticon.com icons
-const charIcons = [
-"images/icon0.jpg",
-"images/icon1.jpg",
-"images/icon2.jpg",
-"images/icon3.jpg"
-];
 
 // Star element
 const star = `<span id="starspan"><img id="star" src="images/star.png"></span>`;
@@ -74,7 +76,7 @@ const player1 = {
 	},
 
 	setDiceIcons(i){
-		$('#p1__card .diceblock__icons').append(`<span>Dice Block: ${diceIcons[i]}</span>`)
+		$('#p1__card .diceblock__icons').html(`<span>Dice Block: ${diceIcons[i]}</span>`)
 	},
 
 	// Player 1 rolls 1 die
@@ -234,7 +236,7 @@ const player2 = {
 	},
 
 	setDiceIcons(i){
-		$('#p2__card .diceblock__icons').append(`Dice Block: ${diceIcons[i]}`)
+		$('#p2__card .diceblock__icons').html(`Dice Block: ${diceIcons[i]}`)
 	},
 
 	// Player 2 rolls 1 die
@@ -363,8 +365,8 @@ const player2 = {
 
 // move from landing page to character selection
 function moveToCharSelect(){
-	$('#landingPageModal').css('display', 'none');
-	$('charSelectModal').css('display', 'block');
+	$('.landingpage__modal').css('display', 'none');
+	$('.charselect__modal').css('display', 'block');
 };
 
 // run when player clicks a select button
@@ -372,10 +374,9 @@ function handleCharSelect(x){
 	if(player1.selected === true){
 		player2.chooseCharacter(x);
 		player2.selected = true;
-		$('#charSelectModal').css('display', 'none');
-
+		$('.charselect__modal').css('display', 'none');
 		$('#centerboard').css('background-image', "url('images/landingpage-background.jpg')");
-
+		spawnStar();
 	} else {
 		player1.chooseCharacter(x);
 		player1.selected = true;
@@ -452,6 +453,15 @@ function handleGameEnd(){
 	};
 };
 
+function resetGame(){
+	player1.selected = false;
+	player2.selected = false;
+	$('.charselect__contents').empty();
+	$('.charselect__contents').append(charSelectModals);
+	$('.charselect__section').css('width', '25%');
+	$('.landingpage__modal').css('display', 'block');
+	// $('#charSelectModal').css('display', 'block');
+}
 
 /* ========================== Testing ================================ */
 
@@ -471,29 +481,29 @@ $('.btn-info').on('click', function(){
 });
 
 // Start button listener
-$('.btn-light').on('click', function(){
+$('body').on('click', '.btn-light', function(){
 	moveToCharSelect();
 })
 
 // Select button listeners 
 
 // Select button 0
-$('#selectButton0').on('click', function(){
+$('body').on('click', '#selectButton0',function(){
 	handleCharSelect(0);
 });
 
 // Select button 1
-$('#selectButton1').on('click', function(){
+$('body').on('click', '#selectButton1',function(){
 	handleCharSelect(1);
 });
 
 // Select button 2
-$('#selectButton2').on('click', function(){
+$('body').on('click', '#selectButton2',function(){
 	handleCharSelect(2);
 });
 
 // Select button 3
-$('#selectButton3').on('click', function(){
+$('body').on('click', '#selectButton3',function(){
 	handleCharSelect(3);
 });
 
