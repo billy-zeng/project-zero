@@ -3,7 +3,7 @@ console.log("Star Chasers up and running...")
 /* =================== Variables ====================== */
 
 // Characters
-const characters = ["Axel", "Jojo", "Iggy", "Speedy"];
+const characters = ["Axel", "Jojo", "Rudy", "Speedy"];
 
 // Dice blocks
 const diceBlocks = [
@@ -361,15 +361,24 @@ function handleCharSelect(x){
 	}
 };
 
+// iterate turn count
 function handleNextTurn(){
 	turnNumber++;
 	$('#turnCounter').text(`Turn: ${turnNumber}`);
 	console.log(`Turn: ${turnNumber}`);
+	highlightCurrentPlayer();
 }
 
+// move from landing page to character selection
 function moveToCharSelect(){
 	$('#landingPageModal').css('display', 'none');
 	$('charSelectModal').css('display', 'block');
+}
+
+// Highlight text of current player to show whose turn it is
+function highlightCurrentPlayer(){
+	$('.player__header > h3 > span').eq(0).toggleClass('rainbow__text');
+	$('.player__header > h3 > span').eq(1).toggleClass('rainbow__text');
 }
 
 /* ========================== Testing ================================ */

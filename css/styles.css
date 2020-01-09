@@ -132,6 +132,12 @@ body {
 
 /* =================================== Roll Button Section =================================== */
 
+#turnCounter {
+	color: #f1f1f1;
+	top: 20px;
+	position: absolute;
+}
+
 #rollbutton__container {
 	/*background-color: purple;*/
 	/*border: 2px solid goldenrod;*/
@@ -143,11 +149,16 @@ body {
 	text-align: center;
 }
 
-#turnCounter {
-	color: white;
-	top: 20px;
-	position: absolute;
+.btn-info {
+	transition: transform 0.6s;
+	border: 1px solid #f1f1f1;
 }
+
+.btn-info:hover {
+	transform: scale(1.1);
+}
+
+
 
 /* =================================== Scoreboard Section =================================== */
 
@@ -277,7 +288,7 @@ body {
 /* Modal Content/Box */
 .modal-content {
  	background-color: #C0C0C0	; /* #fefefe */
-  	margin: 7% auto; /* 8% from the top and centered */
+  	margin: 8% auto; /* 8% from the top and centered */
   	padding: 20px;
   	border: 3px solid #f1f1f1;
   	width: 80%; /* Could be more or less, depending on screen size */
