@@ -3,6 +3,9 @@
 <head>
   	<meta charset="UTF-8">
 	<title>Star Chasers</title>
+
+	<!-- Google Font CSS -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Sans+Caption:700&display=swap" rel="stylesheet">
 	<!-- Font Awesome CSS-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 	<!-- Bootstrap CSS -->
@@ -35,18 +38,18 @@
 		<section class="row">
 			<div class="col-1 gameboard__space blue"> 40 </div>
 			<section id="centerboard" class="col-10">
-				<h1 id="game-title"><i class="fas fa-star-half-alt"></i> STAR CHASERS <i class="fas fa-star-half-alt"></i></h1>
+				<h1 id="game-title"><span class="rainbow__text">   S T A R  C H A S E R S   </span></h1>
 				<section id="diceboard" class="row">
 					<div class="col-4 dice__container">
 						<!-- dice 1 goes here -->
-						<img src="images/dice1.png" class="dice__image">
+						<img id="diceImage1" src="images/dice3.png" class="dice__image">
 					</div>
 					<div class="col-4 dice__container">
 						<!-- dice 2 goes here -->
-						<img src="images/dice3.png" class="dice__image">
+						<img id="diceImage2" src="images/dice3.png" class="dice__image">
 					</div>
 					<div class="col-3" id="rollbutton__container">
-						<h3 id="turnCounter">Turn #</h3>
+						<h3 id="turnCounter">Turn: 1</h3>
 						<button type="button" class="btn btn-info btn-lg roll__button">Roll Dice</button></div>
 				</section>
 

@@ -9,6 +9,19 @@ body {
 
 /* =================================== Game Board =================================== */
 
+#game-title {
+	font-family: 'PT Sans Caption', sans-serif;
+	margin: 5px 0 0 0;
+	/*padding-top: 5px;*/
+}
+
+.rainbow__text {
+  	/*background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);*/
+  	background-image: linear-gradient(to left, blue, green, yellow, red);
+  	-webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .gameboard__space {
 	height: 10vh;
 	position: relative;
@@ -125,7 +138,7 @@ body {
 
 #turnCounter {
 	color: white;
-	top: 15px;
+	top: 20px;
 	position: absolute;
 }
 

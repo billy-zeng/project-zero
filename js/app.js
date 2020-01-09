@@ -13,12 +13,16 @@ const diceBlocks = [
 [3, 3, 3, 3, 4, 4]
 ];
 
+// font awesome dice icons
 const diceIcons = [
 ['<i class="fas fa-dice-one"></i> <i class="fas fa-dice-two"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-five"></i> <i class="fas fa-dice-six"></i>'],
 ['<i class="fas fa-square"></i> <i class="fas fa-dice-two"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-six"></i>'],
 ['<i class="fas fa-dice-one"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-five"></i> <i class="fas fa-dice-six"></i>'],
 ['<i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-three"></i> <i class="fas fa-dice-four"></i> <i class="fas fa-dice-four"></i>'],
 ];
+
+// images of the dice faces
+const diceImages = ["images/dice0.png", "images/dice1.png", "images/dice2.png", "images/dice3.png", "images/dice4.png", "images/dice5.png", "images/dice6.png"];
 
 // 8biticon.com icons
 const charIcons = [
@@ -35,7 +39,7 @@ const star = `<span id="starspan"><img id="star" src="images/star.png"></span>`;
 let roundNumber = 1;
 
 // Turn counter
-let turnNumber = 0; // iterate up to turn 29 => game ends
+let turnNumber = 1; // iterate up to turn 29 => game ends
 
 /* =================== Player Objects =================== */
 
@@ -161,7 +165,11 @@ const player1 = {
 
 	// Full move; run this when player clicks roll button
 	playTurn(){
-		const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
+		const dieRoll1 = this.rollDie();
+		$('#diceImage1').attr('src', `${diceImages[dieRoll1]}`);
+		const dieRoll2 = this.rollDie();
+		$('#diceImage2').attr('src', `${diceImages[dieRoll2]}`);
+		const newPosition = this.currentPosition + dieRoll1 + dieRoll2;
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
 			this.movePiece();
@@ -175,8 +183,9 @@ const player1 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
-		turnNumber++;
-		console.log(`Turn: ${turnNumber}`);
+		// turnNumber++;
+		// $('#turnCounter').text(`${turnNumber}`);
+		// console.log(`Turn: ${turnNumber}`);
 	},
 
 };
@@ -296,7 +305,12 @@ const player2 = {
 
 	// Full move; run this when player clicks roll button
 	playTurn(){
-		const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
+		const dieRoll1 = this.rollDie();
+		$('#diceImage1').attr('src', `${diceImages[dieRoll1]}`);
+		const dieRoll2 = this.rollDie();
+		$('#diceImage2').attr('src', `${diceImages[dieRoll2]}`);
+		const newPosition = this.currentPosition + dieRoll1 + dieRoll2;
+		// const newPosition = this.currentPosition + this.rollDie() + this.rollDie();
 		while(this.currentPosition < newPosition){
 			this.currentPosition++;
 			this.movePiece();
@@ -310,8 +324,9 @@ const player2 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
-		turnNumber++;
-		console.log(`Turn: ${turnNumber}`);
+		// turnNumber++;
+		// $('#turnCounter').text(`${turnNumber}`);
+		// console.log(`Turn: ${turnNumber}`);
 	},
 
 
@@ -351,10 +366,14 @@ spawnStar();
 
 $('.btn-info').on('click', function(){
 	if(turnNumber%2 === 0){
-		player1.playTurn();
-	} else {
 		player2.playTurn();
+	} else {
+		player1.playTurn();
 	}
+
+	turnNumber++;
+	$('#turnCounter').text(`Turn: ${turnNumber}`);
+	console.log(`Turn: ${turnNumber}`);
 });
 
 /* Modal button testing*/
