@@ -48,7 +48,9 @@ let turnNumber = 1; // iterate up to turn 29 => game ends
 /* =================== Player Objects =================== */
 
 const player1 = {
+	playerId: 1,
 	iconId: "p1Icon",
+	// opponent: player2,
 	character: "",
 	charIcon: "",
 	diceBlock: [],
@@ -183,6 +185,32 @@ const player1 = {
 		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
 	},
 
+	// blue store option 1: jump ahead 3-5 spaces
+	jumpAhead(){
+		const spacesToJump = Math.floor(Math.random()*3 + 3);
+		this.currentPosition = this.currentPosition + spacesToJump;
+		this.movePiece();
+		this.checkForStar();
+		$('.resultmessage__container').html(`<p>${this.character} jumped to tile ${this.currentPosition}!</p>`);
+	},
+
+	// blue store option 2: end opponent back 3-5 spaces
+	sendBack(){
+		const spacesToSendBack = Math.floor(Math.random()*3 + 3);
+		this.opponent.currentPosition = this.opponent.currentPosition + 40 - spacesToSendBack;
+		if(this.opponent.currentPosition === 0){
+			this.opponent.currentPosition = 40;
+		}
+		let positionString;
+		if(this.opponent.currentPosition > 40){		// edge case: set correct position
+			positionString = (this.opponent.currentPosition % 40).toString();
+		} else{
+			positionString = this.opponent.currentPosition.toString();
+		}
+		$(`#${this.opponent.iconId}`).parent().remove();
+		$(`div:contains( ${positionString} )`).prepend(this.opponent.charIcon);
+	},
+
 	// Full move; run this when player clicks roll button
 	playTurn(){
 		starsFound = 0;
@@ -211,7 +239,9 @@ const player1 = {
 };
 
 const player2 = {
+	playerId: 2,
 	iconId: "p2Icon",
+	// opponent: player1,
 	character: "",
 	charIcon: "",
 	diceBlock: [],
@@ -337,6 +367,32 @@ const player2 = {
 		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
 	},
 
+	// blue store option 1: jump ahead 3-5 spaces
+	jumpAhead(){
+		const spacesToJump = Math.floor(Math.random()*3 + 3);
+		this.currentPosition = this.currentPosition + spacesToJump;
+		this.movePiece();
+		this.checkForStar();
+		$('.resultmessage__container').html(`<p>${this.character} jumped to tile ${this.currentPosition}!</p>`);
+	},
+
+	// blue store option 2: send opponent back 3-5 spaces
+	sendBack(){
+		const spacesToSendBack = Math.floor(Math.random()*3 + 3);
+		this.opponent.currentPosition = this.opponent.currentPosition + 40 - spacesToSendBack;
+		if(this.opponent.currentPosition === 0){
+			this.opponent.currentPosition = 40;
+		}
+		let positionString;
+		if(this.opponent.currentPosition > 40){		// edge case: set correct position
+			positionString = (this.opponent.currentPosition % 40).toString();
+		} else{
+			positionString = this.opponent.currentPosition.toString();
+		}
+		$(`#${this.opponent.iconId}`).parent().remove();
+		$(`div:contains( ${positionString} )`).prepend(this.opponent.charIcon);
+	},
+
 	// Full move; run this when player clicks roll button
 	playTurn(){
 		starsFound = 0;
@@ -379,7 +435,8 @@ function handleCharSelect(x){
 		player2.chooseCharacter(x);
 		player2.selected = true;
 		$('.charselect__modal').css('display', 'none');
-		$('#centerboard').css('background-image', "url('images/landingpage-background.jpg')");
+		// $('#centerboard').css('background-image', "url('images/landingpage-background.jpg')");
+		$('.container-fluid').css('display', 'block');
 		spawnStar();
 	} else {
 		player1.chooseCharacter(x);
@@ -480,6 +537,9 @@ function resetGame(){
 // Initialize game
 
 spawnStar();
+
+player1.opponent = player2;
+player2.opponent = player1;
 
 /* ========================== Event Listeners ================================ */
 

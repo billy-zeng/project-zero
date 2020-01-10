@@ -30,7 +30,7 @@
 	red: move backward 1/2 space
 	yellow: gain 1-5 coins
 	blue: access the store
-- Accessing the store allows you to spend 3 coins to make an extra dice roll or 5 coins to teleport to a random space on the board. If the player does not wish to purchase either option they may exit the store. Only 1 option may be chosen per store visit. 
+- Accessing the store allows you to spend 3 coins to jump ahead 3-5 spaces or move your opponent back 3-5 spaces<!-- make an extra dice roll --> or 5 coins to teleport to a random space on the board. If the player does not wish to purchase either option they may exit the store. Only 1 option may be chosen per store visit. 
 
 <!-- Scoreboard -->
 - The scoreboard should keep track of the round # and whose turn it is

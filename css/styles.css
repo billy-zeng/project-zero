@@ -3,6 +3,10 @@ body {
 	text-align: center;
 }
 
+.container-fluid {
+	display: none;
+}
+
 .row {
 	height: 10vh;
 }
@@ -16,7 +20,6 @@ body {
 }
 
 .rainbow__text {
-  	/*background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);*/
   	background-image: linear-gradient(to left, blue, green, yellow, red);
   	-webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -33,13 +36,14 @@ body {
 }
 
 #centerboard {
+	/*display: none;*/
 	background-color: #f1f1f1;
 	height: 80vh;
 	border: 2px solid white;
 	z-index: 2;
 
 	color: #f1f1f1;
-	/*background-image: url('../images/landingpage-background.jpg');*/
+	background-image: url('../images/landingpage-background.jpg');
 	background-size: cover;
 }
 
@@ -161,9 +165,8 @@ body {
 	flex-direction: column;
 }
 
-.resultmessage_container > p {
+.resultmessage_container p {
 	margin: auto;
-	align-self: center;
 	width: 100%;
 	/*font-size: 40px;*/
 }
@@ -312,6 +315,9 @@ body {
   	overflow: hidden;
   	background-color: rgb(0,0,0); /* Fallback color */
   	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+  	background-image: url('../images/landingpage-background.jpg');
+	background-size: cover;
 }
 
 /* Modal Content/Box */
@@ -344,6 +350,7 @@ body {
 	display: flex;
 	width: 100%;
 	margin-bottom: 12px;
+	font-size: 1.11em;
 }
 
 .landingpage__contents > p{
@@ -358,6 +365,12 @@ body {
 .btn-light:hover {
 	transform: scale(1.2);
 }
+
+/* =================================== Store Modal =================================== */
+
+
+
+
 
 /* ========================================================================================== */
 
