@@ -3,10 +3,6 @@ body {
 	text-align: center;
 }
 
-/*.container-fluid {
-	display: none;
-}*/
-
 .row {
 	height: 10vh;
 	display: flex;
@@ -78,8 +74,8 @@ body {
 }
 
 .player__icon {
-	max-height: 35px;
-	max-width: 35px;
+	max-height: 33px;
+	max-width: 33px;
 	border-radius: 10px;
 }
 
@@ -170,13 +166,14 @@ body {
 /* =================================== Scoreboard Section =================================== */
 
 #scoreboard {
-	height: 47%;
+	height: 48%;
 	border-top: 3px solid #f1f1f1;
 }
 
 .scorecard {
 	display: flex;
 	flex-direction: column;
+	padding-top: 0.5%;
 }
 
 .scorecard:first-child {

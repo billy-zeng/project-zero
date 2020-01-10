@@ -18,7 +18,7 @@
 	standard: 1, 2, 3, 4, 5, 6
 	dice 2: 0, 2, 4, 4, 4, 6
 	dice 3: 1, 3, 3, 3, 5, 6
-	dice 4: 3, 3, 3, 4, 4, 4 
+	dice 4: 3, 3, 3, 3, 4, 4 
 - Once characters are selected, display the main gameboard
 
 <!-- Gameboard -->
@@ -30,25 +30,25 @@
 	red: move backward 1/2 space
 	yellow: gain 1-5 coins
 	blue: access the store
-- Accessing the store allows you to spend 3 coins to jump ahead 3-5 spaces or move your opponent back 3-5 spaces<!-- make an extra dice roll --> or 5 coins to teleport to a random space on the board. If the player does not wish to purchase either option they may exit the store. Only 1 option may be chosen per store visit. 
+- Accessing the store allows you to spend 3 coins to jump ahead 3-5 spaces or move your opponent back 3-5 spaces or 5 coins to teleport to a random space on the board. If the player does not wish to purchase either option they may exit the store. Only 1 option may be chosen per store visit. 
 
 <!-- Scoreboard -->
-- The scoreboard should keep track of the round # and whose turn it is
+- The scoreboard should keep track of the round # and what turn it is
 - It should also display each players' character (and dice roll outcomes possibilities), and track # of coins and stars
 
 <!-- Gameplay -->
 - The game runs for 15 rounds
 - A star appears on a random spot on the board at the start of the game
 - Once a player reaches a star, a new one appears at another random spot on the board
-- Players take turn hitting the roll button, which rolls 2 of their character's die
+- Players take turn hitting the roll button, which rolls 2 of their character's dice
 - Their game piece moves spaces clockwise on the board according to the combined dice roll
 - Once they land on a space, check the color of the space and activating the corresponding event
 - This event color check only occurs after the player's intitial dice roll of each round
 
 <!-- End Game -->
-- After the 15th round, the game ends
+- After the 30th turn, the game ends
 - All remaining coins are converted to stars at a 15 coins to 1 star ratio 
-- The player with the most stars wins and the winner is displayed in a popup
+- The player with the most stars wins and the winner is announced
 - Players may click 'play again' button to reset the game and start at character selection
 
 <!-------------------------------------------------------------------------------------------------------->

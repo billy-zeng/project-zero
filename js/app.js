@@ -74,7 +74,7 @@ class Player {
 		this.setPlayerName(i);
 		this.setDiceIcons(i);
 		$(`#p${this.playerId}Icon`).parent().remove();
-		$('#1').prepend(this.charIcon);
+		$('#1').append(this.charIcon);
 	};
 
 	setPlayerAvatar(i){
@@ -98,7 +98,7 @@ class Player {
 	// Move player's piece on the board
 	movePiece(){
 		$(`#p${this.playerId}Icon`).parent().remove();
-		$(`#${this.currentPosition}`).prepend(this.charIcon);
+		$(`#${this.currentPosition}`).append(this.charIcon);
 	};
 
 	// update coin counter on DOM
@@ -217,7 +217,7 @@ class Player {
 			this.opponent.currentPosition = (this.opponent.currentPosition + 40) % 40;
 		}
 		$(`#${this.opponent.iconId}`).parent().remove();
-		$(`#${this.opponent.currentPosition}`).prepend(this.opponent.charIcon);
+		$(`#${this.opponent.currentPosition}`).append(this.opponent.charIcon);
 		$('.resultmessage__container').html(`<p>${this.character} threw a banana peel and sent ${this.opponent.character} back to tile [${this.opponent.currentPosition}]!</p>`);
 	};
 
@@ -358,12 +358,10 @@ function handleNextTurn(){
 
 	if(turnNumber > totalTurns){
 		$('#turnCounter').text('Game Over');
-		$('.btn-info').text('Reset Game');
+		$('.btn-info').text('Play Again');
 		$('.btn-info').toggleClass('roll__button');
 		$('.btn-info').toggleClass('reset__button');
 	};
-
-	// highlightCurrentPlayer();
 };
 
 function handleGameEnd(){
@@ -373,7 +371,7 @@ function handleGameEnd(){
 
 		if (p1Total > p2Total){
 			$('.resultmessage__container').html(`<p>${player1.character} is the winner! With your help he collected a grand total of ${p1Total} stars <i class="far fa-star"></i></p>`);
-		} else if (p1Total > p2Total){
+		} else if (p1Total < p2Total){
 			$('.resultmessage__container').html(`<p>${player2.character} is the winner! With your help he collected a grand total of ${p2Total} stars <i class="far fa-star"></i></p>`);
 		} else {
 			$('.resultmessage__container').html(`<p>It's a tie! Both players each collected a grand total of ${p1Total} stars <i class="far fa-star"></i></p>`);
@@ -420,12 +418,7 @@ function resetGame(){
 	$('.landingpage__modal').css('display', 'block');
 };
 
-/* ========================== Testing ================================ */
-
-// Initialize game
-
-// Place star randomly on the board
-// spawnStar();
+/* ========================== Initialize Game ================================ */
 
 // Instantiate player objects from Player class
 player1 = new Player(1, "p1Icon");
@@ -508,7 +501,7 @@ $('#storeButton2').on('click', function(){
 	$('.store__modal').css('display', 'none');
 });
 
-// Leave store button listener
+/* Leave store button listener */
 $('#leaveStoreButton').on('click', function(){
 	$('.resultmessage__container').html(`<p>Thanks for stopping by the store!</p>`);
 	$('.store__modal').css('display', 'none');
