@@ -89,14 +89,6 @@ const player1 = {
 		return this.diceBlock[randomIdx];
 	},
 
-	// Calculate new position based on dice roll
-	// calculateNewPosition(){
-	// 	this.currentPosition = this.currentPosition + this.rollDie() + this.rollDie();
-	// 	if(this.currentPosition > 40){
-	// 		this.currentPosition = this.currentPosition % 40;
-	// 	};
-	// },
-
 	// Move player 1's piece on the board
 	movePiece(){
 		let positionString;
@@ -109,13 +101,23 @@ const player1 = {
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
+	// update coin counter on DOM
+	updateCoinCount(){
+		$(`#coinCount${this.playerId}`).text(`${this.coinCount}`);
+	},
+
+	// update star counter on DOM
+	updatStarCount(){
+		$(`#starCount${this.playerId}`).text(`${this.starCount}`);
+	},
+
 	// Check space for star and capture if present
 	checkForStar(){
 		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!"); // testing purposes
 			starsFound++;
 			this.starCount += 1;
-			$('#starCount1').text(`${this.starCount}`);
+			this.updatStarCount();
 			spawnStar();
 		};
 	},
@@ -171,7 +173,8 @@ const player1 = {
 	landOnYellow(){
 		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
-		$('#coinCount1').text(`${this.coinCount}`);
+		// $('#coinCount1').text(`${this.coinCount}`);
+		this.updateCoinCount();
 		console.log(`${this.character} gained ${gainedCoins} coins`); // testing purposes
 
 		$('.resultmessage__container').html(`<p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
@@ -179,44 +182,50 @@ const player1 = {
 
 	landOnBlue(){
 		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
+		$('#availableCoins').html(`Coins Available: ${this.coinCount}<i class="fas fa-coins"></i>`);
+		$('.store__modal').css('display', 'block');
 	},
 
 	// blue store option 1: jump ahead 3-5 spaces
 	jumpAhead(){
+		this.coinCount -= 3;
+		this.updateCoinCount();
 		const spacesToJump = Math.floor(Math.random()*3 + 3);
 		this.currentPosition = this.currentPosition + spacesToJump;
 		if(this.currentPosition > 40){
 			this.currentPosition = this.currentPosition % 40;
 		}
 		this.movePiece();
-		$('.resultmessage__container').html(`<p>${this.character} jumped to tile ${this.currentPosition}!</p>`);
+		$('.resultmessage__container').html(`<p>${this.character} jumped on the trampoline and landed on tile [${this.currentPosition}]!</p>`);
 		this.checkForStar();
 		handleStarFoundMessage()
 	},
 
 	// blue store option 2: end opponent back 3-5 spaces
 	sendBack(){
+		this.coinCount -= 3;
+		this.updateCoinCount();
 		const spacesToSendBack = Math.floor(Math.random()*3 + 3);
 		this.opponent.currentPosition = this.opponent.currentPosition + 40 - spacesToSendBack;
 		if(this.opponent.currentPosition === 0){
 			this.opponent.currentPosition = 40;
+		} else {
+			this.opponent.currentPosition = this.opponent.currentPosition % 40;
 		}
-		let positionString;
-		if(this.opponent.currentPosition > 40){		// edge case: set correct position
-			positionString = (this.opponent.currentPosition % 40).toString();
-		} else{
-			positionString = this.opponent.currentPosition.toString();
-		}
+		let positionString = this.opponent.currentPosition.toString();
 		$(`#${this.opponent.iconId}`).parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.opponent.charIcon);
+		$('.resultmessage__container').html(`<p>${this.character} threw a banana peel and sent ${this.opponent.character} back to tile [${this.opponent.currentPosition}]!</p>`);
 	},
 
 	// blue store option 3: jump to random spot on the map
 	jumpToRandom(){
+		this.coinCount -= 5;
+		this.updateCoinCount();
 		const randomTile = Math.floor(Math.random()*40 +1);
 		this.currentPosition = randomTile;
 		this.movePiece();
-		$('.resultmessage__container').html(`<p>${this.character} hopped in the vortex and landed on tile ${this.currentPosition}!</p>`);
+		$('.resultmessage__container').html(`<p>${this.character} hopped in the vortex and landed on tile [${this.currentPosition}]!</p>`);
 		this.checkForStar();
 		handleStarFoundMessage()
 	},
@@ -301,13 +310,23 @@ const player2 = {
 		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
 	},
 
+	// update coin counter on DOM
+	updateCoinCount(){
+		$(`#coinCount${this.playerId}`).text(`${this.coinCount}`);
+	},
+
+	// update star counter on DOM
+	updatStarCount(){
+		$(`#starCount${this.playerId}`).html(`${this.starCount}`);
+	},
+
 	// Check space for star and capture if present
 	checkForStar(){
 		if($('#p2Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!");
 			starsFound++;
 			this.starCount += 1;
-			$('#starCount2').html(`${this.starCount}`);
+			this.updatStarCount();
 			spawnStar();
 		};
 	},
@@ -363,7 +382,8 @@ const player2 = {
 	landOnYellow(){
 		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
-		$('#coinCount2').text(`${this.coinCount}`);
+		// $('#coinCount2').text(`${this.coinCount}`);
+		this.updateCoinCount();
 		console.log(`${this.character} gained ${gainedCoins} coins`);
 
 		$('.resultmessage__container').html(`<p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
@@ -371,44 +391,50 @@ const player2 = {
 
 	landOnBlue(){
 		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
+		$('#availableCoins').html(`Coins Available: ${this.coinCount}<i class="fas fa-coins"></i>`);
+		$('.store__modal').css('display', 'block');
 	},
 
 	// blue store option 1: jump ahead 3-5 spaces
 	jumpAhead(){
+		this.coinCount -= 3;
+		this.updateCoinCount();
 		const spacesToJump = Math.floor(Math.random()*3 + 3);
 		this.currentPosition = this.currentPosition + spacesToJump;
 		if(this.currentPosition > 40){
 			this.currentPosition = this.currentPosition % 40;
 		}
 		this.movePiece();
-		$('.resultmessage__container').html(`<p>${this.character} jumped to tile ${this.currentPosition}!</p>`);
+		$('.resultmessage__container').html(`<p>${this.character} jumped on the trampoline and landed on tile [${this.currentPosition}]!</p>`);
 		this.checkForStar();
 		handleStarFoundMessage();
 	},
 
 	// blue store option 2: send opponent back 3-5 spaces
 	sendBack(){
+		this.coinCount -= 3;
+		this.updateCoinCount();
 		const spacesToSendBack = Math.floor(Math.random()*3 + 3);
 		this.opponent.currentPosition = this.opponent.currentPosition + 40 - spacesToSendBack;
 		if(this.opponent.currentPosition === 0){
 			this.opponent.currentPosition = 40;
+		} else {
+			this.opponent.currentPosition = this.opponent.currentPosition % 40;
 		}
-		let positionString;
-		if(this.opponent.currentPosition > 40){		// edge case: set correct position
-			positionString = (this.opponent.currentPosition % 40).toString();
-		} else{
-			positionString = this.opponent.currentPosition.toString();
-		}
+		let positionString = this.opponent.currentPosition.toString();
 		$(`#${this.opponent.iconId}`).parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.opponent.charIcon);
+		$('.resultmessage__container').html(`<p>${this.character} threw a banana peel and sent ${this.opponent.character} back to tile [${this.opponent.currentPosition}]!</p>`);
 	},
 
 	// blue store option 3: jump to random spot on the map
 	jumpToRandom(){
+		this.coinCount -= 5;
+		this.updateCoinCount();
 		const randomTile = Math.floor(Math.random()*40 +1);
 		this.currentPosition = randomTile;
 		this.movePiece();
-		$('.resultmessage__container').html(`<p>${this.character} hopped in the vortex and landed on tile ${this.currentPosition}!</p>`);
+		$('.resultmessage__container').html(`<p>${this.character} hopped in the vortex and landed on tile [${this.currentPosition}]!</p>`);
 		this.checkForStar();
 		handleStarFoundMessage();
 	},
@@ -483,9 +509,9 @@ function spawnStar(){
 
 function handleStarFoundMessage(){
 	if(starsFound === 1){
-		$('.resultmessage__container > p').after(`You found a star! <i class="far fa-star"></i>`);
+		$('.resultmessage__container > p').after(`Found a star! <i class="far fa-star"></i>`);
 	} else if (starsFound > 1){
-		$('.resultmessage__container > p').after(`You found ${starsFound} stars! <i class="far fa-star"></i>`);
+		$('.resultmessage__container > p').after(`Found [${starsFound}] stars! <i class="far fa-star"></i>`);
 	}
 };
 
@@ -562,7 +588,7 @@ player2.opponent = player1;
 
 /* ========================== Event Listeners ================================ */
 
-// Roll button listener
+/* Roll button listener */
 $('.btn-info').on('click', function(){
 	if(turnNumber%2 === 0){
 		player2.playTurn();
@@ -571,12 +597,12 @@ $('.btn-info').on('click', function(){
 	}
 });
 
-// Start button listener
+/* Start button listener */
 $('body').on('click', '.btn-light', function(){
 	moveToCharSelect();
 })
 
-// Select button listeners 
+/* Select button listeners */
 
 // Select button 0
 $('body').on('click', '#selectButton0',function(){
@@ -596,6 +622,56 @@ $('body').on('click', '#selectButton2',function(){
 // Select button 3
 $('body').on('click', '#selectButton3',function(){
 	handleCharSelect(3);
+});
+
+/* Store button listeners */
+
+// Store button 0 listener
+$('#storeButton0').on('click', function(){
+	if(turnNumber%2 === 0){
+		// player1.coinCount -= 3;
+		// $('#coinCount1').text(`${player1.coinCount}`);
+		player1.jumpAhead();
+	} else {
+		// player2.coinCount -= 3;
+		// $('#coinCount2').text(`${player2.coinCount}`);
+		player2.jumpAhead();
+	}
+	$('.store__modal').css('display', 'none');
+});
+
+// Store button 1 listener
+$('#storeButton1').on('click', function(){
+	if(turnNumber%2 === 0){
+		// player1.coinCount -= 3;
+		// $('#coinCount1').text(`${player1.coinCount}`);
+		player1.sendBack();
+	} else {
+		// player2.coinCount -= 3;
+		// $('#coinCount2').text(`${player2.coinCount}`);
+		player2.sendBack();
+	}
+	$('.store__modal').css('display', 'none');
+});
+
+// Store button 2 listener
+$('#storeButton2').on('click', function(){
+	if(turnNumber%2 === 0){
+		// player1.coinCount -= 5;
+		// $('#coinCount1').text(`${player1.coinCount}`);
+		player1.jumpToRandom();
+	} else {
+		// player2.coinCount -= 5;
+		// $('#coinCount2').text(`${player2.coinCount}`);
+		player2.jumpToRandom();
+	}
+	$('.store__modal').css('display', 'none');
+});
+
+// Leave store button listener
+$('#leaveStoreButton').on('click', function(){
+	$('.resultmessage__container').html("Thanks for stopping by the store!");
+	$('.store__modal').css('display', 'none');
 });
 
 /* ========================== Player Class for OOP approach ================================ */

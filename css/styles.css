@@ -137,6 +137,7 @@ body {
 }
 
 /* Taken from w3schools shake image example */
+/* https://www.w3schools.com/howto/howto_css_shake_image.asp */
 @keyframes shake {
   0% { transform: translate(1px, 1px) rotate(0deg); }
   10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -281,9 +282,10 @@ body {
   	overflow: hidden;
   	background-color: rgb(0,0,0); /* Fallback color */
   	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-
   	background-image: url('../images/landingpage-background.jpg');
 	background-size: cover;
+
+	margin-bottom: 30%;
 }
 
 /* Modal Content/Box */
@@ -375,6 +377,11 @@ body {
 	margin-bottom: 15px;
 }
 
+#availableCoins {
+	font-size: 1rem;
+	margin: 0 auto;
+}
+
 .store__contents {
 	display: flex;
 	width: 100%;
@@ -412,6 +419,11 @@ body {
 	background-color: orange;
 	margin-top: 15px;
 	border: 1px solid #f1f1f1;
+	transition: transform 0.6s;
+}
+
+#leaveStoreButton:hover {
+	transform: scale(1.1);
 }
 
 /* ========================================================================================== */
