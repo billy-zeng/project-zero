@@ -30,7 +30,7 @@
 	red: move backward 1/2 space
 	yellow: gain 1-5 coins
 	blue: access the store
-- Accessing the store allows you to spend 3 coins to jump ahead 3-5 spaces or move your opponent back 3-5 spaces or 5 coins to teleport to a random space on the board. If the player does not wish to purchase either option they may exit the store. Only 1 option may be chosen per store visit. 
+- Accessing the store allows you to spend 3 coins to jump ahead 3-5 spaces, 3 coins to move your opponent back 3-5 spaces or 5 coins to teleport to a random space on the board. If the player does not wish to or does not have enough coins purchase an item they may exit the store. Only 1 option may be chosen per store visit. 
 
 <!-- Scoreboard -->
 - The scoreboard should keep track of the round # and what turn it is
@@ -42,8 +42,8 @@
 - Once a player reaches a star, a new one appears at another random spot on the board
 - Players take turn hitting the roll button, which rolls 2 of their character's dice
 - Their game piece moves spaces clockwise on the board according to the combined dice roll
-- Once they land on a space, check the color of the space and activating the corresponding event
-- This event color check only occurs after the player's intitial dice roll of each round
+- Once they land on a space, check the color of the space and activate the corresponding event
+- This event color check only occurs after the player's intitial dice roll of the turn (once per turn)
 
 <!-- End Game -->
 - After the 30th turn, the game ends
