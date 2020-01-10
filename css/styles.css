@@ -3,9 +3,9 @@ body {
 	text-align: center;
 }
 
-.container-fluid {
+/*.container-fluid {
 	display: none;
-}
+}*/
 
 .row {
 	height: 10vh;
@@ -236,7 +236,7 @@ body {
 	background-color: pink;
 }
 
-/* =================================== All Modals =================================== */
+/* =================================== Standard styling for all modals =================================== */
 
 /* The Modal (background) */
 .modal {
@@ -252,17 +252,15 @@ body {
   	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   	background-image: url('../images/landingpage-background.jpg');
 	background-size: cover;
-
-/*	margin-bottom: 30%;*/
 }
 
 /* Modal Content/Box */
 .modal-content {
- 	background-color: #C0C0C0	; /* #fefefe */
-  	margin: 8% auto; /* 8% from the top and centered */
+ 	background-color: #C0C0C0;
+  	margin: 8% auto;
   	padding: 20px;
   	border: 3px solid #f1f1f1;
-  	width: 80%; /* Could be more or less, depending on screen size */
+  	width: 80%;
   	display: flex;
   	border-radius: 50px;
 	color: #f1f1f1;
@@ -273,7 +271,7 @@ body {
 /* =================================== Landing Page Modal =================================== */
 
 .landingpage__modal {
-	z-index: 11; 
+	z-index: 12; 
  	display: block; 
 }
 
@@ -302,6 +300,11 @@ body {
 }
 
 /* =================================== Character Selection Modal =================================== */
+
+.charselect__modal {
+	z-index: 11; 
+ 	display: none; 
+}
 
 .charselect__header {
 	text-align: center;

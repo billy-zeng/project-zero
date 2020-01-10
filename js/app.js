@@ -44,11 +44,11 @@ const star = `<span id="starspan"><img id="star" src="images/star.png"></span>`;
 // tracks stars found per turn
 let starsFound = 0;
 
-// Round counter
-let roundNumber = 1;
+// Total turns
+const totalTurns = 30; // adjust for how many turns to play for
 
 // Turn counter
-let turnNumber = 1; // iterate up to turn 31 => game ends
+let turnNumber = 1; // will iterate up to totalTurns => game ends
 
 // /* =================== Player Class =================== */
 
@@ -56,7 +56,6 @@ class Player {
 	constructor(playerId, pIcon){
 		this.playerId = playerId; // pass 1 for player1 and 2 for player2
 		this.iconId = pIcon; // pass p1Icon for player1 and p2Icon for p2
-		// opponent: player1,
 		this.character = "";
 		this.charIcon = "";
 		this.diceBlock = [];
@@ -66,7 +65,7 @@ class Player {
 		this.starCount = 0;
 	};
 
-	// Player  chooses a character and places their game piece on the board
+	// Player chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
 		this.charIcon = `<span><img id=${this.iconId} class="player__icon" src=${charIcons[i]}></span>`;
@@ -74,8 +73,8 @@ class Player {
 		this.setPlayerAvatar(i);
 		this.setPlayerName(i);
 		this.setDiceIcons(i);
-		$('#p2Icon').parent().remove();
-		$(`div:contains(" 1 ")`).prepend(this.charIcon);
+		$(`#p${this.playerId}Icon`).parent().remove();
+		$('#1').prepend(this.charIcon);
 	};
 
 	setPlayerAvatar(i){
@@ -115,7 +114,6 @@ class Player {
 	// Check space for star and capture if present
 	checkForStar(){
 		if($(`#p${this.playerId}Icon`).parent().siblings().last().attr('id') === 'starspan'){
-			// console.log("Found a star!");
 			starsFound++;
 			this.starCount += 1;
 			this.updateStarCount();
@@ -124,18 +122,13 @@ class Player {
 	};
 
 	checkColor(){
-		// const posString = this.currentPosition.toString();
 		if ($(`#${this.currentPosition}`).hasClass('green')){
-			// console.log("green!");
 			this.landOnGreen();
 		} else if ($(`#${this.currentPosition}`).hasClass('red')){
-			// console.log("red!");
 			this.landOnRed();
 		} else if ($(`#${this.currentPosition}`).hasClass('yellow')){
-			// console.log("yellow!");
 			this.landOnYellow();
 		} else if ($(`#${this.currentPosition}`).hasClass('blue')){
-			// console.log("blue!");
 			this.landOnBlue();
 		};
 	};
@@ -165,13 +158,7 @@ class Player {
 			}
 		}
 
-		// // edge case: set correct position
-		// if(this.currentPosition > 40){
-		// 	this.currentPosition = this.currentPosition % 40;
-		// }
-		// console.log(`${this.character} advanced ${advanceSpaces} spaces`);
-
-		$('.resultmessage__container').html(`<p>${this.character} landed on a green tile and advanced [${advanceSpaces}]!</p>`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a green tile and advanced ${advanceSpaces} spaces!</p>`);
 	};
 
 	landOnRed(){
@@ -185,17 +172,16 @@ class Player {
 		this.movePiece();
 		console.log(`${this.character} moved back ${moveBackSpaces} spaces`);
 
-		$('.resultmessage__container').html(`<p>${this.character} landed on a red tile and moved back [${moveBackSpaces}]</p>`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a red tile and moved back ${moveBackSpaces} spaces</p>`);
 	};
 
 	landOnYellow(){
 		const gainedCoins = Math.floor(Math.random()*5 + 1);
 		this.coinCount += gainedCoins;
-		// $('#coinCount2').text(`${this.coinCount}`);
 		this.updateCoinCount();
 		console.log(`${this.character} gained ${gainedCoins} coins`);
 
-		$('.resultmessage__container').html(`<p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a yellow tile and gained ${gainedCoins} coins! <i class="fas fa-coins"></p>`);
 	};
 
 	landOnBlue(){
@@ -230,7 +216,6 @@ class Player {
 		} else {
 			this.opponent.currentPosition = (this.opponent.currentPosition + 40) % 40;
 		}
-		// let positionString = this.opponent.currentPosition.toString();
 		$(`#${this.opponent.iconId}`).parent().remove();
 		$(`#${this.opponent.currentPosition}`).prepend(this.opponent.charIcon);
 		$('.resultmessage__container').html(`<p>${this.character} threw a banana peel and sent ${this.opponent.character} back to tile [${this.opponent.currentPosition}]!</p>`);
@@ -250,6 +235,12 @@ class Player {
 
 	// Full move; run this when player clicks roll button
 	playTurn(){
+
+		// // check if game is over
+		// if(turnNumber > totalTurns){
+		// 	handleGameEnd();
+		// };
+
 		starsFound = 0;
 		const dieRoll1 = this.rollDie();
 		animateDiceRoll(1, dieRoll1);
@@ -277,16 +268,12 @@ class Player {
 			}
 		}
 
-		// // edge case: set correct position
-		// if(this.currentPosition > 40){
-		// 	this.currentPosition = this.currentPosition % 40;
-		// }
-		console.log(`landed on ${this.currentPosition}`);
 		this.checkColor();
-		console.log(this.currentPosition); // testing purposes
 
 		handleStarFoundMessage();
 		handleNextTurn();
+
+		handleGameEnd();
 	};
 
 };
@@ -305,8 +292,6 @@ function handleCharSelect(x){
 		player2.chooseCharacter(x);
 		player2.selected = true;
 		$('.charselect__modal').css('display', 'none');
-		// $('#centerboard').css('background-image', "url('images/landingpage-background.jpg')");
-		$('.container-fluid').css('display', 'block');
 		spawnStar();
 	} else {
 		player1.chooseCharacter(x);
@@ -324,7 +309,6 @@ function highlightCurrentPlayer(){
 
 // Have star appear on a random spot on the map
 function spawnStar(){
-	// $("#star").parent().remove(); // remove star from board first 
 	$('#starspan').remove();
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".gameboard__space").eq(randomIndex);
@@ -335,7 +319,7 @@ function handleStarFoundMessage(){
 	if(starsFound === 1){
 		$('.resultmessage__container > p').after(`Found a star! <i class="far fa-star"></i>`);
 	} else if (starsFound > 1){
-		$('.resultmessage__container > p').after(`Found [${starsFound}] stars! <i class="far fa-star"></i>`);
+		$('.resultmessage__container > p').after(`Found ${starsFound} stars! <i class="far fa-star"></i>`);
 	}
 };
 
@@ -370,30 +354,39 @@ function animateDiceRoll(x, dieRoll){
 function handleNextTurn(){
 	turnNumber++;
 	$('#turnCounter').text(`Turn: ${turnNumber}`);
-	// console.log(`Turn: ${turnNumber}`);
 	highlightCurrentPlayer();
 
-	// check if game is over
-	if(turnNumber >30){
-		handleGameEnd();
+	if(turnNumber > totalTurns){
+		$('#turnCounter').text('Game Over');
+		$('.btn-info').text('Reset Game');
+		$('.btn-info').toggleClass('roll__button');
+		$('.btn-info').toggleClass('reset__button');
 	};
+
+	// highlightCurrentPlayer();
 };
 
 function handleGameEnd(){
-	let p1Total = player1.starCount + Math.floor(player1.coinCount/15);
-	let p2Total = player2.starCount + Math.floor(player2.coinCount/15);
+	if(turnNumber > totalTurns){
+		let p1Total = player1.starCount + Math.floor(player1.coinCount/15);
+		let p2Total = player2.starCount + Math.floor(player2.coinCount/15);
 
-	if (p1Total > p2Total){
-		alert(`${player1.character} is the winner! With your help he collected a grand total of ${p1Total} stars.`)
-	} else if (p1Total > p2Total){
-		alert(`${player2.character} is the winner! With your help he collected a grand total of ${p2Total} stars.`)
-	} else {
-		alert(`It's a tie! Both players each collected a grand total of ${p1Total} stars.`)
+		if (p1Total > p2Total){
+			$('.resultmessage__container').html(`${player1.character} is the winner! With your help he collected a grand total of ${p1Total} stars.`);
+		} else if (p1Total > p2Total){
+			$('.resultmessage__container').html(`${player2.character} is the winner! With your help he collected a grand total of ${p2Total} stars.`);
+		} else {
+			$('.resultmessage__container').html(`It's a tie! Both players each collected a grand total of ${p1Total} stars.`);
+		}
 	};
-	resetGame();
 };
 
 function resetGame(){
+
+	// reset the roll dice button
+	$('.btn-info').text('Roll Dice');
+	$('.btn-info').toggleClass('roll__button');
+	$('.btn-info').toggleClass('reset__button');
 
 	// remove player icons from board
 	$('#p1Icon').parent().remove();
@@ -416,8 +409,6 @@ function resetGame(){
 	player1.updateStarCount();
 	player2.updateStarCount();
 	$('#turnCounter').text(`Turn: ${turnNumber}`);
-	highlightCurrentPlayer();
-
 
 	// display default welcome message
 	$('.resultmessage__container').html(`<p>Ready to go catch some stars!</p>`);
@@ -427,14 +418,16 @@ function resetGame(){
 	$('.charselect__contents').append(charSelectModals);
 	$('.charselect__section').css('width', '25%');
 	$('.landingpage__modal').css('display', 'block');
-}
+};
 
 /* ========================== Testing ================================ */
 
 // Initialize game
 
-spawnStar();
+// Place star randomly on the board
+// spawnStar();
 
+// Instantiate player objects from Player class
 player1 = new Player(1, "p1Icon");
 player2 = new Player(2, "p2Icon");
 player1.opponent = player2;
@@ -443,12 +436,17 @@ player2.opponent = player1;
 /* ========================== Event Listeners ================================ */
 
 /* Roll button listener */
-$('.btn-info').on('click', function(){
+$('body').on('click', '.roll__button', function(){
 	if(turnNumber%2 === 0){
 		player2.playTurn();
 	} else {
 		player1.playTurn();
 	}
+});
+
+/* Roll button listener */
+$('body').on('click', '.reset__button', function(){
+	resetGame();
 });
 
 /* Start button listener */
@@ -483,12 +481,8 @@ $('body').on('click', '#selectButton3',function(){
 // Store button 0 listener
 $('#storeButton0').on('click', function(){
 	if(turnNumber%2 === 0){
-		// player1.coinCount -= 3;
-		// $('#coinCount1').text(`${player1.coinCount}`);
 		player1.jumpAhead();
 	} else {
-		// player2.coinCount -= 3;
-		// $('#coinCount2').text(`${player2.coinCount}`);
 		player2.jumpAhead();
 	}
 	$('.store__modal').css('display', 'none');
@@ -497,12 +491,8 @@ $('#storeButton0').on('click', function(){
 // Store button 1 listener
 $('#storeButton1').on('click', function(){
 	if(turnNumber%2 === 0){
-		// player1.coinCount -= 3;
-		// $('#coinCount1').text(`${player1.coinCount}`);
 		player1.sendBack();
 	} else {
-		// player2.coinCount -= 3;
-		// $('#coinCount2').text(`${player2.coinCount}`);
 		player2.sendBack();
 	}
 	$('.store__modal').css('display', 'none');
@@ -511,12 +501,8 @@ $('#storeButton1').on('click', function(){
 // Store button 2 listener
 $('#storeButton2').on('click', function(){
 	if(turnNumber%2 === 0){
-		// player1.coinCount -= 5;
-		// $('#coinCount1').text(`${player1.coinCount}`);
 		player1.jumpToRandom();
 	} else {
-		// player2.coinCount -= 5;
-		// $('#coinCount2').text(`${player2.coinCount}`);
 		player2.jumpToRandom();
 	}
 	$('.store__modal').css('display', 'none');
