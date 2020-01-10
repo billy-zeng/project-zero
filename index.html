@@ -155,6 +155,25 @@
 		</section>
 	</section>
 
+	<!-- Landing Page Modal -->
+	<div class="modal landingpage__modal">
+
+	 	 <!-- Modal content -->
+	  	<div class="modal-content landingpage__screen">
+	   		<!-- <span class="close">&times;</span> -->
+	   		<section class="landingpage__header">
+	   			<h1><span class="rainbow__text">Welcome to Stardust Road</span></h1>
+	   		</section>
+	   		<section class="landingpage__contents">
+	   			<p>We welcome you to this strange, faraway land where we find four adventurers stranded on what seems to be a never-ending rainbow path. Our weary travelers go by the names of Axel Arrondale, Jojo Johnson, Rudy Rambo, and Steven "Speedy" Shu. They come from different parts of the world and each carry their own pair of lucky dice. They've decided to play a little game to look for and collect fallen stars and they need your help!<br/><br/>
+	   			First, you and a friend must each select an adventurer to play. You will take turns rolling your adventurers' lucky dice and your adventurer will move spaces on the board according to the results of the rolls. Landing on a green tile will advance you forward 1-2 spaces; Landing on a red tile will move you back 1-2 spaces; Landing on a yellow tile will give your adventurer 1-5 coins; Landing on a blue tile will allow your adventurer to visit the store and spend their coins. Your goal is to move your adventurer around the map and collect as many fallen stars as possible. When a star is picked up, a new one will appear on a random tile on the map. At the end of 30 rounds, the player with the most stars wins! Any remaining coins will also be converted to stars at a 15:1 ratio. Best of luck!</p>
+	   		</section>
+	   		<section class="start__button">
+	   			<button type="button" class="btn btn-light btn-lg">Start!</button>
+	   		</section>
+	  	</div>
+	</div>
+
 	<!-- Character selection modal -->
 
 	<div class="modal charselect__modal">
@@ -202,23 +221,45 @@
 		</div>
 	</div>
 
-	<!-- Landing Page Modal -->
-	<div class="modal landingpage__modal">
+	<!-- Store model -->
 
-	 	 <!-- Modal content -->
-	  	<div class="modal-content landingpage__screen">
-	   		<!-- <span class="close">&times;</span> -->
-	   		<section class="landingpage__header">
-	   			<h1><span class="rainbow__text">Welcome to Stardust Road</span></h1>
-	   		</section>
-	   		<section class="landingpage__contents">
-	   			<p>We welcome you to this strange, faraway land where we find four adventurers stranded on what seems to be a never-ending rainbow path. Our weary travelers go by the names of Axel Arrondale, Jojo Johnson, Rudy Rambo, and Steven "Speedy" Shu. They come from different parts of the world and each carry their own pair of lucky dice. They've decided to play a little game to look for and collect fallen stars and they need your help!<br/><br/>
-	   			First, you and a friend must each select an adventurer to play. You will take turns rolling your adventurers' lucky dice and your adventurer will move spaces on the board according to the results of the rolls. Landing on a green tile will advance you forward 1-2 spaces; Landing on a red tile will move you back 1-2 spaces; Landing on a yellow tile will give your adventurer 1-5 coins; Landing on a blue tile will allow your adventurer to visit the store and spend their coins. Your goal is to move your adventurer around the map and collect as many fallen stars as possible. When a star is picked up, a new one will appear on a random tile on the map. At the end of 30 rounds, the player with the most stars wins! Any remaining coins will also be converted to stars at a 15:1 ratio. Best of luck!</p>
-	   		</section>
-	   		<section class="start__button">
-	   			<button type="button" class="btn btn-light btn-lg">Start!</button>
-	   		</section>
-	  	</div>
+	<div class="modal store__modal">
+
+	  	<!-- Modal content -->
+	  	<div class="modal-content store__screen">
+		    <div class="store__header">
+		    	<h1>Welcome to the Store</h1>
+		    </div>
+		    <div class="store__contents">
+		    	<div class="store__section">
+		    		<h3 class="item__name">Trampoline</h3>
+					<div class="item__container">
+						<img class="item__image" src="images/trampoline.jpg">
+					</div>
+					<p class="item__description">Jump on the trampoline and advance 3-5 spaces! (Jumps directly and does not collect stars along the way)</p>
+					<button type="button" class="btn btn-secondary" id="storeButton0">Jump on Trampoline</button>
+		    	</div>
+		    	<div class="store__section">
+		    		<h3 class="item__name">Banana Peel</h3>
+					<div class="item__container">
+						<img class="item__image" src="images/bananapeel.png">
+					</div>
+					<p class="item__description">Throw a banana peel at your opponent's feet and watch them slip! Sends them back 3-5 spaces</p>
+					<button type="button" class="btn btn-secondary" id="storeButton1">Throw Banana Peel</button>
+		    	</div>
+		    	<div class="store__section">
+		    		<h3 class="item__name">Vortex</h3>
+					<div class="item__container">
+						<img class="item__image" src="images/vortex.png">
+					</div>
+					<p class="item__description">Ride the mysterious whirling vortex and see where you end up! It'll take you to any random tile on the map</p>
+					<button type="button" class="btn btn-secondary" id="storeButton2">Ride the Vortex</button>
+		    	</div>
+		    </div>
+		    <div class="store__footer">
+		    	<button type="button" class="btn btn-lg" id="leaveStoreButton">Leave store</button>
+		    </div>
+		</div>
 	</div>
 
 </body>

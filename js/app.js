@@ -114,10 +114,6 @@ const player1 = {
 		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!"); // testing purposes
 			starsFound++;
-
-			// setTimeout(function(){
-			// 	alert(`You found a star!`);
-			// }, 1150);
 			this.starCount += 1;
 			$('#starCount1').text(`${this.starCount}`);
 			spawnStar();
@@ -189,9 +185,13 @@ const player1 = {
 	jumpAhead(){
 		const spacesToJump = Math.floor(Math.random()*3 + 3);
 		this.currentPosition = this.currentPosition + spacesToJump;
+		if(this.currentPosition > 40){
+			this.currentPosition = this.currentPosition % 40;
+		}
 		this.movePiece();
-		this.checkForStar();
 		$('.resultmessage__container').html(`<p>${this.character} jumped to tile ${this.currentPosition}!</p>`);
+		this.checkForStar();
+		handleStarFoundMessage()
 	},
 
 	// blue store option 2: end opponent back 3-5 spaces
@@ -209,6 +209,16 @@ const player1 = {
 		}
 		$(`#${this.opponent.iconId}`).parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.opponent.charIcon);
+	},
+
+	// blue store option 3: jump to random spot on the map
+	jumpToRandom(){
+		const randomTile = Math.floor(Math.random()*40 +1);
+		this.currentPosition = randomTile;
+		this.movePiece();
+		$('.resultmessage__container').html(`<p>${this.character} hopped in the vortex and landed on tile ${this.currentPosition}!</p>`);
+		this.checkForStar();
+		handleStarFoundMessage()
 	},
 
 	// Full move; run this when player clicks roll button
@@ -232,7 +242,7 @@ const player1 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
-		handleStarFoundMessage()
+		handleStarFoundMessage();
 		handleNextTurn();
 	},
 
@@ -296,10 +306,6 @@ const player2 = {
 		if($('#p2Icon').parent().next().attr('id') === 'starspan'){
 			console.log("Found a star!");
 			starsFound++;
-			// setTimeout(function(){
-			// 	alert('You found a star!');
-			// }, 1150);
-			// alert(`${this.character} found a star!`);
 			this.starCount += 1;
 			$('#starCount2').html(`${this.starCount}`);
 			spawnStar();
@@ -360,7 +366,7 @@ const player2 = {
 		$('#coinCount2').text(`${this.coinCount}`);
 		console.log(`${this.character} gained ${gainedCoins} coins`);
 
-		$('.resultmessage__container').html(`</p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
+		$('.resultmessage__container').html(`<p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
 	},
 
 	landOnBlue(){
@@ -371,9 +377,13 @@ const player2 = {
 	jumpAhead(){
 		const spacesToJump = Math.floor(Math.random()*3 + 3);
 		this.currentPosition = this.currentPosition + spacesToJump;
+		if(this.currentPosition > 40){
+			this.currentPosition = this.currentPosition % 40;
+		}
 		this.movePiece();
-		this.checkForStar();
 		$('.resultmessage__container').html(`<p>${this.character} jumped to tile ${this.currentPosition}!</p>`);
+		this.checkForStar();
+		handleStarFoundMessage();
 	},
 
 	// blue store option 2: send opponent back 3-5 spaces
@@ -391,6 +401,16 @@ const player2 = {
 		}
 		$(`#${this.opponent.iconId}`).parent().remove();
 		$(`div:contains( ${positionString} )`).prepend(this.opponent.charIcon);
+	},
+
+	// blue store option 3: jump to random spot on the map
+	jumpToRandom(){
+		const randomTile = Math.floor(Math.random()*40 +1);
+		this.currentPosition = randomTile;
+		this.movePiece();
+		$('.resultmessage__container').html(`<p>${this.character} hopped in the vortex and landed on tile ${this.currentPosition}!</p>`);
+		this.checkForStar();
+		handleStarFoundMessage();
 	},
 
 	// Full move; run this when player clicks roll button
@@ -414,7 +434,7 @@ const player2 = {
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
-		handleStarFoundMessage()
+		handleStarFoundMessage();
 		handleNextTurn();
 	},
 
@@ -529,7 +549,6 @@ function resetGame(){
 	$('.charselect__contents').append(charSelectModals);
 	$('.charselect__section').css('width', '25%');
 	$('.landingpage__modal').css('display', 'block');
-	// $('#charSelectModal').css('display', 'block');
 }
 
 /* ========================== Testing ================================ */
