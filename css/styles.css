@@ -1,6 +1,7 @@
 body {
 	background-color: #f1f1f1;
 	text-align: center;
+	color: #f1f1f1;
 }
 
 .row {
@@ -22,13 +23,12 @@ body {
 }
 
 .gameboard__space {
-	/*max-height: 10vh;*/
 	height: 10vh;
 	position: relative;
 	opacity: 0.8;
 	border: 2px solid white;
 	line-height: 68.59px;
-	color: white;
+	/*color: white;*/
 	overflow: hidden;
 	display: flex;
 	align-content: center;
@@ -40,8 +40,7 @@ body {
 	height: 80vh;
 	border: 2px solid white;
 	z-index: 2;
-
-	color: #f1f1f1;
+	/*color: #f1f1f1;*/
 	background-image: url('../images/landingpage-background.jpg');
 	background-size: cover;
 }
@@ -84,7 +83,7 @@ body {
 #diceboard {
 	height: 43%;
 	border-top : 3px solid #f1f1f1;
-	color: #f1f1f1;
+	/*color: #f1f1f1;*/
 	display: flex;
 }
 
@@ -259,7 +258,7 @@ body {
   	width: 80%;
   	display: flex;
   	border-radius: 50px;
-	color: #f1f1f1;
+	/*color: #f1f1f1;*/
 	background-image: url('../images/landingpage-background.jpg');
 	background-size: cover;
 }
@@ -393,18 +392,3 @@ body {
 }
 
 /* ========================================================================================== */
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
