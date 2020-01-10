@@ -96,8 +96,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
-	width: 20%;
+	width: 16.5%;
 }
 
 .dice__image {
@@ -125,9 +124,9 @@ body {
 /* =================================== Result Message Section =================================== */
 
 .resultmessage__container {
-	align-items: center;
+	align-content: center;
 	text-align: center;
-	width: 35%;
+	width: 34%;
 	border-left: 3px solid #f1f1f1;
 	display: flex;
 	font-size: 1.4em;
@@ -135,8 +134,8 @@ body {
 	flex-direction: column;
 }
 
-.resultmessage_container p {
-	margin: auto;
+.resultmessage__container p {
+	margin: 8% auto 0;
 	width: 100%;
 	overflow: hidden;
 }
@@ -156,7 +155,7 @@ body {
 	justify-content: center;
 	text-align: center;
 	position: relative;
-	width: 25%;
+	width: 33%;
 }
 
 .btn-info {

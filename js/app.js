@@ -185,7 +185,7 @@ class Player {
 	};
 
 	landOnBlue(){
-		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
+		// $('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
 		$('#availableCoins').html(`Coins Available: ${this.coinCount} <i class="fas fa-coins"></i>`);
 		$('.store__modal').css('display', 'block');
 	};
@@ -372,11 +372,11 @@ function handleGameEnd(){
 		let p2Total = player2.starCount + Math.floor(player2.coinCount/15);
 
 		if (p1Total > p2Total){
-			$('.resultmessage__container').html(`${player1.character} is the winner! With your help he collected a grand total of ${p1Total} stars.`);
+			$('.resultmessage__container').html(`<p>${player1.character} is the winner! With your help he collected a grand total of ${p1Total} stars <i class="far fa-star"></i></p>`);
 		} else if (p1Total > p2Total){
-			$('.resultmessage__container').html(`${player2.character} is the winner! With your help he collected a grand total of ${p2Total} stars.`);
+			$('.resultmessage__container').html(`<p>${player2.character} is the winner! With your help he collected a grand total of ${p2Total} stars <i class="far fa-star"></i></p>`);
 		} else {
-			$('.resultmessage__container').html(`It's a tie! Both players each collected a grand total of ${p1Total} stars.`);
+			$('.resultmessage__container').html(`<p>It's a tie! Both players each collected a grand total of ${p1Total} stars <i class="far fa-star"></i></p>`);
 		}
 	};
 };
@@ -510,6 +510,6 @@ $('#storeButton2').on('click', function(){
 
 // Leave store button listener
 $('#leaveStoreButton').on('click', function(){
-	$('.resultmessage__container').html("Thanks for stopping by the store!");
+	$('.resultmessage__container').html(`<p>Thanks for stopping by the store!</p>`);
 	$('.store__modal').css('display', 'none');
 });
