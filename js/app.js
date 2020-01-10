@@ -2,6 +2,10 @@ console.log("Star Chasers up and running...")
 
 /* =================== Variables ====================== */
 
+// Player objects
+let player1 = {};
+let player2 = {};
+
 // Character names
 const characters = ["Axel", "Jojo", "Rudy", "Speedy"];
 
@@ -37,238 +41,32 @@ const diceImages = ["images/dice0.png", "images/dice1.png", "images/dice2.png", 
 // Star element
 const star = `<span id="starspan"><img id="star" src="images/star.png"></span>`;
 
+// tracks stars found per turn
 let starsFound = 0;
 
 // Round counter
 let roundNumber = 1;
 
 // Turn counter
-let turnNumber = 1; // iterate up to turn 29 => game ends
+let turnNumber = 1; // iterate up to turn 31 => game ends
 
-/* =================== Player Objects =================== */
+// /* =================== Player Class =================== */
 
-const player1 = {
-	playerId: 1,
-	iconId: "p1Icon",
-	// opponent: player2,
-	character: "",
-	charIcon: "",
-	diceBlock: [],
-	selected: false,
-	currentPosition: 1,
-	coinCount: 0,
-	starCount: 0,
+class Player {
+	constructor(playerId, pIcon){
+		this.playerId = playerId; // pass 1 for player1 and 2 for player2
+		this.iconId = pIcon; // pass p1Icon for player1 and p2Icon for p2
+		// opponent: player1,
+		this.character = "";
+		this.charIcon = "";
+		this.diceBlock = [];
+		this.selected = false;
+		this.currentPosition = 1;
+		this.coinCount = 0;
+		this.starCount = 0;
+	};
 
-	// Player 1 chooses a character and places their game piece on the board
-	chooseCharacter(i){
-		this.character = characters[i];
-		this.charIcon = `<span><img id=${this.iconId} class="player__icon" src=${charIcons[i]}></span>`;
-		this.diceBlock = diceBlocks[i];
-		this.setPlayerAvatar(i);
-		this.setPlayerName(i);
-		this.setDiceIcons(i);
-		$('#p1Icon').parent().remove();
-		$(`div:contains(" 1 ")`).prepend(this.charIcon);
-	},
-
-	setPlayerAvatar(i){
-		$('#player1Avatar > img').attr('src', charIcons[i]);
-	},
-
-	setPlayerName(i){
-		$('#player1Avatar').prev().text(this.character);
-	},
-
-	setDiceIcons(i){
-		$('#p1__card .diceblock__icons').html(`<span>Dice Block: ${diceIcons[i]}</span>`)
-	},
-
-	// Player 1 rolls 1 die
-	rollDie(){
-		const randomIdx = (Math.floor(Math.random()*6));
-		return this.diceBlock[randomIdx];
-	},
-
-	// Move player 1's piece on the board
-	movePiece(){
-		let positionString;
-		if(this.currentPosition > 40){		// edge case: set correct position
-			positionString = (this.currentPosition % 40).toString();
-		} else{
-			positionString = this.currentPosition.toString();
-		}
-		$('#p1Icon').parent().remove();
-		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
-	},
-
-	// update coin counter on DOM
-	updateCoinCount(){
-		$(`#coinCount${this.playerId}`).text(`${this.coinCount}`);
-	},
-
-	// update star counter on DOM
-	updatStarCount(){
-		$(`#starCount${this.playerId}`).text(`${this.starCount}`);
-	},
-
-	// Check space for star and capture if present
-	checkForStar(){
-		if($('#p1Icon').parent().next().attr('id') === 'starspan'){
-			console.log("Found a star!"); // testing purposes
-			starsFound++;
-			this.starCount += 1;
-			this.updatStarCount();
-			spawnStar();
-		};
-	},
-
-	checkColor(){
-		const posString = this.currentPosition.toString();
-		if ($(`div:contains( ${posString} )`).hasClass('green')){ // testing purposes
-			console.log("green!");
-			this.landOnGreen();
-		} else if ($(`div:contains( ${posString} )`).hasClass('red')){ // testing purposes
-			console.log("red!");
-			this.landOnRed();
-		} else if ($(`div:contains( ${posString} )`).hasClass('yellow')){ // testing purposes
-			console.log("yellow!");
-			this.landOnYellow();
-		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){ // testing purposes
-			console.log("blue!");
-			this.landOnBlue();
-		};
-	},
-
-	landOnGreen(){
-		const advanceSpaces = Math.floor(Math.random()*2 + 1);
-		const newPosition = this.currentPosition + advanceSpaces;
-		while(this.currentPosition < newPosition){
-			this.currentPosition++;
-			this.movePiece();
-			this.checkForStar();
-		}
-		// edge case: set correct position
-		if(this.currentPosition > 40){
-			this.currentPosition = this.currentPosition % 40;
-		}
-		console.log(`${this.character} advanced ${advanceSpaces} spaces`); // testing purposes
-
-		$('.resultmessage__container').html(`${this.character} landed on a green tile and advanced [${advanceSpaces}]!</p>`);
-	},
-
-	landOnRed(){
-		const moveBackSpaces = Math.floor(Math.random()*2 + 1);
-		this.currentPosition -= moveBackSpaces;
-		if(this.currentPosition === 0){
-			this.currentPosition = 40;
-		}
-		let positionString = this.currentPosition.toString();
-		$('#p1Icon').parent().remove();
-		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
-		console.log(`${this.character} moved back ${moveBackSpaces} spaces`); // testing purposes
-
-		$('.resultmessage__container').html(`<p>${this.character} landed on a red tile and moved back [${moveBackSpaces}]</p>`);
-	},
-
-	landOnYellow(){
-		const gainedCoins = Math.floor(Math.random()*5 + 1);
-		this.coinCount += gainedCoins;
-		// $('#coinCount1').text(`${this.coinCount}`);
-		this.updateCoinCount();
-		console.log(`${this.character} gained ${gainedCoins} coins`); // testing purposes
-
-		$('.resultmessage__container').html(`<p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
-	},
-
-	landOnBlue(){
-		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
-		$('#availableCoins').html(`Coins Available: ${this.coinCount}<i class="fas fa-coins"></i>`);
-		$('.store__modal').css('display', 'block');
-	},
-
-	// blue store option 1: jump ahead 3-5 spaces
-	jumpAhead(){
-		this.coinCount -= 3;
-		this.updateCoinCount();
-		const spacesToJump = Math.floor(Math.random()*3 + 3);
-		this.currentPosition = this.currentPosition + spacesToJump;
-		if(this.currentPosition > 40){
-			this.currentPosition = this.currentPosition % 40;
-		}
-		this.movePiece();
-		$('.resultmessage__container').html(`<p>${this.character} jumped on the trampoline and landed on tile [${this.currentPosition}]!</p>`);
-		this.checkForStar();
-		handleStarFoundMessage()
-	},
-
-	// blue store option 2: end opponent back 3-5 spaces
-	sendBack(){
-		this.coinCount -= 3;
-		this.updateCoinCount();
-		const spacesToSendBack = Math.floor(Math.random()*3 + 3);
-		this.opponent.currentPosition = this.opponent.currentPosition + 40 - spacesToSendBack;
-		if(this.opponent.currentPosition === 0){
-			this.opponent.currentPosition = 40;
-		} else {
-			this.opponent.currentPosition = this.opponent.currentPosition % 40;
-		}
-		let positionString = this.opponent.currentPosition.toString();
-		$(`#${this.opponent.iconId}`).parent().remove();
-		$(`div:contains( ${positionString} )`).prepend(this.opponent.charIcon);
-		$('.resultmessage__container').html(`<p>${this.character} threw a banana peel and sent ${this.opponent.character} back to tile [${this.opponent.currentPosition}]!</p>`);
-	},
-
-	// blue store option 3: jump to random spot on the map
-	jumpToRandom(){
-		this.coinCount -= 5;
-		this.updateCoinCount();
-		const randomTile = Math.floor(Math.random()*40 +1);
-		this.currentPosition = randomTile;
-		this.movePiece();
-		$('.resultmessage__container').html(`<p>${this.character} hopped in the vortex and landed on tile [${this.currentPosition}]!</p>`);
-		this.checkForStar();
-		handleStarFoundMessage()
-	},
-
-	// Full move; run this when player clicks roll button
-	playTurn(){
-		starsFound = 0;
-		const dieRoll1 = this.rollDie();
-		animateDiceRoll(1, dieRoll1);
-		const dieRoll2 = this.rollDie();
-		animateDiceRoll(2, dieRoll2);
-		const newPosition = this.currentPosition + dieRoll1 + dieRoll2;
-		while(this.currentPosition < newPosition){
-			this.currentPosition++;
-			this.movePiece();
-			this.checkForStar();
-		}
-		// edge case: set correct position
-		if(this.currentPosition > 40){
-			this.currentPosition = this.currentPosition % 40;
-		}
-		console.log(`landed on ${this.currentPosition}`); // testing purposes
-		this.checkColor();
-		console.log(this.currentPosition); // testing purposes
-
-		handleStarFoundMessage();
-		handleNextTurn();
-	},
-
-};
-
-const player2 = {
-	playerId: 2,
-	iconId: "p2Icon",
-	// opponent: player1,
-	character: "",
-	charIcon: "",
-	diceBlock: [],
-	selected: false,
-	currentPosition: 1,
-	coinCount: 0,
-	starCount: 0,
-	// Player 2 chooses a character and places their game piece on the board
+	// Player  chooses a character and places their game piece on the board
 	chooseCharacter(i){
 		this.character = characters[i];
 		this.charIcon = `<span><img id=${this.iconId} class="player__icon" src=${charIcons[i]}></span>`;
@@ -278,106 +76,117 @@ const player2 = {
 		this.setDiceIcons(i);
 		$('#p2Icon').parent().remove();
 		$(`div:contains(" 1 ")`).prepend(this.charIcon);
-	},
+	};
 
 	setPlayerAvatar(i){
-		$('#player2Avatar > img').attr('src', charIcons[i]);
-	},
+		$(`#player${this.playerId}Avatar > img`).attr('src', charIcons[i]);
+	};
 
 	setPlayerName(i){
-		$('#player2Avatar').prev().text(this.character);
-	},
+		$(`#player${this.playerId}Avatar`).prev().text(this.character);
+	};
 
 	setDiceIcons(i){
-		$('#p2__card .diceblock__icons').html(`Dice Block: ${diceIcons[i]}`)
-	},
+		$(`#p${this.playerId}__card .diceblock__icons`).html(`Dice Block: ${diceIcons[i]}`)
+	};
 
-	// Player 2 rolls 1 die
+	// Player rolls 1 die
 	rollDie(){
 		const randomIdx = (Math.floor(Math.random()*6));
 		return this.diceBlock[randomIdx];
-	},
+	};
 
-	// Move player 2's piece on the board
+	// Move player's piece on the board
 	movePiece(){
-		let positionString;
-		if(this.currentPosition > 40){		// edge case: set correct position
-			positionString = (this.currentPosition % 40).toString();
-		} else{
-			positionString = this.currentPosition.toString();
-		}
-		$('#p2Icon').parent().remove();
-		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
-	},
+		$(`#p${this.playerId}Icon`).parent().remove();
+		$(`#${this.currentPosition}`).prepend(this.charIcon);
+	};
 
 	// update coin counter on DOM
 	updateCoinCount(){
 		$(`#coinCount${this.playerId}`).text(`${this.coinCount}`);
-	},
+	};
 
 	// update star counter on DOM
-	updatStarCount(){
+	updateStarCount(){
 		$(`#starCount${this.playerId}`).html(`${this.starCount}`);
-	},
+	};
 
 	// Check space for star and capture if present
 	checkForStar(){
-		if($('#p2Icon').parent().next().attr('id') === 'starspan'){
-			console.log("Found a star!");
+		if($(`#p${this.playerId}Icon`).parent().siblings().last().attr('id') === 'starspan'){
+			// console.log("Found a star!");
 			starsFound++;
 			this.starCount += 1;
-			this.updatStarCount();
+			this.updateStarCount();
 			spawnStar();
 		};
-	},
+	};
 
 	checkColor(){
-		const posString = this.currentPosition.toString();
-		if ($(`div:contains( ${posString} )`).hasClass('green')){
-			console.log("green!");
+		// const posString = this.currentPosition.toString();
+		if ($(`#${this.currentPosition}`).hasClass('green')){
+			// console.log("green!");
 			this.landOnGreen();
-		} else if ($(`div:contains( ${posString} )`).hasClass('red')){
-			console.log("red!");
+		} else if ($(`#${this.currentPosition}`).hasClass('red')){
+			// console.log("red!");
 			this.landOnRed();
-		} else if ($(`div:contains( ${posString} )`).hasClass('yellow')){
-			console.log("yellow!");
+		} else if ($(`#${this.currentPosition}`).hasClass('yellow')){
+			// console.log("yellow!");
 			this.landOnYellow();
-		} else if ($(`div:contains( ${posString} )`).hasClass('blue')){
-			console.log("blue!");
+		} else if ($(`#${this.currentPosition}`).hasClass('blue')){
+			// console.log("blue!");
 			this.landOnBlue();
 		};
-	},
+	};
 
 	landOnGreen(){
 		const advanceSpaces = Math.floor(Math.random()*2 + 1);
 		const newPosition = this.currentPosition + advanceSpaces;
-		while(this.currentPosition < newPosition){
-			this.currentPosition++;
-			this.movePiece();
-			this.checkForStar();
+
+		// move to spaces one by one and check each for stars
+		if (newPosition <= 40){
+			while(this.currentPosition < newPosition){
+				this.currentPosition++;
+				this.movePiece();
+				this.checkForStar();
+			}
+		} else {
+			while(this.currentPosition < 40){
+				this.currentPosition++;
+				this.movePiece();
+				this.checkForStar();
+			}
+			this.currentPosition = 0;
+			while(this.currentPosition < (newPosition % 40)){
+				this.currentPosition++;
+				this.movePiece();
+				this.checkForStar();
+			}
 		}
-		// edge case: set correct position
-		if(this.currentPosition > 40){
-			this.currentPosition = this.currentPosition % 40;
-		}
-		console.log(`${this.character} advanced ${advanceSpaces} spaces`);
+
+		// // edge case: set correct position
+		// if(this.currentPosition > 40){
+		// 	this.currentPosition = this.currentPosition % 40;
+		// }
+		// console.log(`${this.character} advanced ${advanceSpaces} spaces`);
 
 		$('.resultmessage__container').html(`<p>${this.character} landed on a green tile and advanced [${advanceSpaces}]!</p>`);
-	},
+	};
 
 	landOnRed(){
 		const moveBackSpaces = Math.floor(Math.random()*2 + 1);
 		this.currentPosition -= moveBackSpaces;
 		if(this.currentPosition === 0){
 			this.currentPosition = 40;
+		} else if(this.currentPosition < 0){
+			this.currentPosition = (this.currentPosition + 40) % 40;
 		}
-		let positionString = this.currentPosition.toString();
-		$('#p2Icon').parent().remove();
-		$(`div:contains( ${positionString} )`).prepend(this.charIcon);
+		this.movePiece();
 		console.log(`${this.character} moved back ${moveBackSpaces} spaces`);
 
 		$('.resultmessage__container').html(`<p>${this.character} landed on a red tile and moved back [${moveBackSpaces}]</p>`);
-	},
+	};
 
 	landOnYellow(){
 		const gainedCoins = Math.floor(Math.random()*5 + 1);
@@ -387,13 +196,13 @@ const player2 = {
 		console.log(`${this.character} gained ${gainedCoins} coins`);
 
 		$('.resultmessage__container').html(`<p>${this.character} landed on a yellow tile and gained [${gainedCoins}] coins! <i class="fas fa-coins"></p>`);
-	},
+	};
 
 	landOnBlue(){
 		$('.resultmessage__container').html(`<p>${this.character} landed on a blue tile!</p>`);
-		$('#availableCoins').html(`Coins Available: ${this.coinCount}<i class="fas fa-coins"></i>`);
+		$('#availableCoins').html(`Coins Available: ${this.coinCount} <i class="fas fa-coins"></i>`);
 		$('.store__modal').css('display', 'block');
-	},
+	};
 
 	// blue store option 1: jump ahead 3-5 spaces
 	jumpAhead(){
@@ -408,24 +217,24 @@ const player2 = {
 		$('.resultmessage__container').html(`<p>${this.character} jumped on the trampoline and landed on tile [${this.currentPosition}]!</p>`);
 		this.checkForStar();
 		handleStarFoundMessage();
-	},
+	};
 
 	// blue store option 2: send opponent back 3-5 spaces
 	sendBack(){
 		this.coinCount -= 3;
 		this.updateCoinCount();
 		const spacesToSendBack = Math.floor(Math.random()*3 + 3);
-		this.opponent.currentPosition = this.opponent.currentPosition + 40 - spacesToSendBack;
+		this.opponent.currentPosition -= spacesToSendBack;
 		if(this.opponent.currentPosition === 0){
 			this.opponent.currentPosition = 40;
 		} else {
-			this.opponent.currentPosition = this.opponent.currentPosition % 40;
+			this.opponent.currentPosition = (this.opponent.currentPosition + 40) % 40;
 		}
-		let positionString = this.opponent.currentPosition.toString();
+		// let positionString = this.opponent.currentPosition.toString();
 		$(`#${this.opponent.iconId}`).parent().remove();
-		$(`div:contains( ${positionString} )`).prepend(this.opponent.charIcon);
+		$(`#${this.opponent.currentPosition}`).prepend(this.opponent.charIcon);
 		$('.resultmessage__container').html(`<p>${this.character} threw a banana peel and sent ${this.opponent.character} back to tile [${this.opponent.currentPosition}]!</p>`);
-	},
+	};
 
 	// blue store option 3: jump to random spot on the map
 	jumpToRandom(){
@@ -437,7 +246,7 @@ const player2 = {
 		$('.resultmessage__container').html(`<p>${this.character} hopped in the vortex and landed on tile [${this.currentPosition}]!</p>`);
 		this.checkForStar();
 		handleStarFoundMessage();
-	},
+	};
 
 	// Full move; run this when player clicks roll button
 	playTurn(){
@@ -447,23 +256,38 @@ const player2 = {
 		const dieRoll2 = this.rollDie();
 		animateDiceRoll(2, dieRoll2);
 		const newPosition = this.currentPosition + dieRoll1 + dieRoll2;
-		while(this.currentPosition < newPosition){
-			this.currentPosition++;
-			this.movePiece();
-			this.checkForStar();
+
+		if (newPosition <= 40){
+			while(this.currentPosition < newPosition){
+				this.currentPosition++;
+				this.movePiece();
+				this.checkForStar();
+			}
+		} else {
+			while(this.currentPosition < 40){
+				this.currentPosition++;
+				this.movePiece();
+				this.checkForStar();
+			}
+			this.currentPosition = 0;
+			while(this.currentPosition < (newPosition % 40)){
+				this.currentPosition++;
+				this.movePiece();
+				this.checkForStar();
+			}
 		}
-		// edge case: set correct position
-		if(this.currentPosition > 40){
-			this.currentPosition = this.currentPosition % 40;
-		}
+
+		// // edge case: set correct position
+		// if(this.currentPosition > 40){
+		// 	this.currentPosition = this.currentPosition % 40;
+		// }
 		console.log(`landed on ${this.currentPosition}`);
 		this.checkColor();
 		console.log(this.currentPosition); // testing purposes
 
 		handleStarFoundMessage();
 		handleNextTurn();
-	},
-
+	};
 
 };
 
@@ -504,7 +328,7 @@ function spawnStar(){
 	$('#starspan').remove();
 	const randomIndex = Math.floor(Math.random()*40);
 	const randomSpot = $(".gameboard__space").eq(randomIndex);
-	randomSpot.prepend(star);
+	randomSpot.append(star);
 };
 
 function handleStarFoundMessage(){
@@ -521,10 +345,9 @@ function animateDiceRoll(x, dieRoll){
 	// shake animation
 	$(`#diceImage${x}`).css('animation', "shake 1.1s ");
 
+	// "slow" for loop to loop through dice image array
 	let i=0; 
-	
 	timedLoop();
-
 	function timedLoop(){
 		setTimeout(function(){
 			$(`#diceImage${x}`).attr('src', `${diceImages[i]}`);
@@ -535,6 +358,7 @@ function animateDiceRoll(x, dieRoll){
 		}, 150);
 	};
 
+	// show actual dice roll result after looping through dice images
 	setTimeout(function(){
 		$(`#diceImage${x}`).attr('src', `${diceImages[dieRoll]}`);
 		$(`#diceImage${x}`).css('animation', "");
@@ -546,7 +370,7 @@ function animateDiceRoll(x, dieRoll){
 function handleNextTurn(){
 	turnNumber++;
 	$('#turnCounter').text(`Turn: ${turnNumber}`);
-	console.log(`Turn: ${turnNumber}`);
+	// console.log(`Turn: ${turnNumber}`);
 	highlightCurrentPlayer();
 
 	// check if game is over
@@ -566,11 +390,39 @@ function handleGameEnd(){
 	} else {
 		alert(`It's a tie! Both players each collected a grand total of ${p1Total} stars.`)
 	};
+	resetGame();
 };
 
 function resetGame(){
-	player1.selected = false;
-	player2.selected = false;
+
+	// remove player icons from board
+	$('#p1Icon').parent().remove();
+	$('#p2Icon').parent().remove();
+
+	// reset player objects
+	player1 = new Player(1, "p1Icon");
+	player2 = new Player(2, "p2Icon");
+	player1.opponent = player2;
+	player2.opponent = player1;
+	
+	// reset game state variables
+	starsFound = 0;
+	roundNumber = 1;
+	turnNumber = 1;
+
+	// reset DOM counters
+	player1.updateCoinCount();
+	player2.updateCoinCount();
+	player1.updateStarCount();
+	player2.updateStarCount();
+	$('#turnCounter').text(`Turn: ${turnNumber}`);
+	highlightCurrentPlayer();
+
+
+	// display default welcome message
+	$('.resultmessage__container').html(`<p>Ready to go catch some stars!</p>`);
+
+	// reset character select screen and open landing page
 	$('.charselect__contents').empty();
 	$('.charselect__contents').append(charSelectModals);
 	$('.charselect__section').css('width', '25%');
@@ -583,6 +435,8 @@ function resetGame(){
 
 spawnStar();
 
+player1 = new Player(1, "p1Icon");
+player2 = new Player(2, "p2Icon");
 player1.opponent = player2;
 player2.opponent = player1;
 
@@ -673,33 +527,3 @@ $('#leaveStoreButton').on('click', function(){
 	$('.resultmessage__container').html("Thanks for stopping by the store!");
 	$('.store__modal').css('display', 'none');
 });
-
-/* ========================== Player Class for OOP approach ================================ */
-
-// class Player {
-// 	constructor(){
-// 		this.character = "";
-// 		this.diceBlock = [];
-// 		this.currentPosition = 1;
-// 		this.coinCount: 0;
-// 		this.starCount = 0;
-// 	}
-// 	chooseCharacter(i){
-// 		this.character = characters[i];
-// 		this.charIcon = charIcons[i];
-// 		this.diceBlock = diceBlocks[i];
-// 	}
-// 	rollDice(){
-// 		const randomIdx = (Math.floor(Math.random()*6));
-// 		return this.diceBlock[randomIdx];
-// 	},
-// 	calculateNewPosition(){
-// 		this.currentPosition = this.currentPosition + this.rollDice() + this.rollDice();
-// 		if(this.currentPosition > 40){
-// 			this.currentPosition = this.currentPosition % 40;
-// 		}
-// 	},
-// }
-
-// player1 = new Player;
-// player2 = new Player;
