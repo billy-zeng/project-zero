@@ -1,12 +1,12 @@
-# project-zero
+# Project Zero: Stardust Road
 
-// == Star Chasers == //
+// == Stardust Road == //
 
-- The obejctive of this game is to collect as many stars as possible within 15 rounds of play
+- The obejctive of this game is to move your piece around the board and collect as many stars as possible within 15 rounds of play
 
 <!-------------------------------------------------------------------------------------------------------->
 
-// == User Stories/game logic == //
+// == User Stories/Game Logic == //
 
 <!-- Intro -->
 - When the page loads, a modal pops up introducing game and explaining the rules (or leave it up as an aside)

@@ -9,6 +9,7 @@ body {
 
 .row {
 	height: 10vh;
+	display: flex;
 }
 
 /* =================================== Game Board =================================== */
@@ -16,7 +17,6 @@ body {
 #game-title {
 	font-family: 'PT Sans Caption', sans-serif;
 	margin: 5px 0 0 0;
-	/*padding-top: 5px;*/
 }
 
 .rainbow__text {
@@ -26,17 +26,20 @@ body {
 }
 
 .gameboard__space {
-	max-height: 10vh;
+	/*max-height: 10vh;*/
+	height: 10vh;
 	position: relative;
 	opacity: 0.8;
 	border: 2px solid white;
 	line-height: 68.59px;
 	color: white;
 	overflow: hidden;
+	display: flex;
+	align-content: center;
+	justify-content: center;
 }
 
 #centerboard {
-	/*display: none;*/
 	background-color: #f1f1f1;
 	height: 80vh;
 	border: 2px solid white;
@@ -49,50 +52,18 @@ body {
 
 .green {
 	background-color: green;
-/*	background-size: cover;
-	background-image: 
-    linear-gradient(
-      rgba(0, 255, 0, 0.7), 
-      rgba(0, 255, 0, 0.7)
-    ),
-    url("../rightarrow.png");
-    background-position: center;*/
 }
 
 .red {
 	background-color: red;	
-/*	background-size: cover;
-	background-image: 
-    linear-gradient(
-      rgba(255, 0, 0, 0.7), 
-      rgba(255, 0, 0, 0.7)
-    ),
-    url("../backward.png");
-    background-position: center;*/
 }
 
 .yellow {
 	background-color: goldenrod;
-/*	background-size: cover;
-	background-image: 
-    linear-gradient(
-      rgba(255, 255, 0, 0.5), 
-      rgba(255, 255, 0, 0.5)
-    ),
-    url("../goldbar.jpg");
-    background-position: center;*/
 }
 
 .blue {
 	background-color: blue;
-/*	background-size: contain;
-	background-image: 
-    linear-gradient(
-      rgba(0, 0, 255, 0.5), 
-      rgba(0, 0, 255, 0.5)
-    ),
-    url("../mart.jpg");
-    background-position: center;*/
 }
 
 /* =================================== Game Pieces =================================== */
@@ -107,8 +78,8 @@ body {
 }
 
 .player__icon {
-	max-height: 50%;
-	max-width: 50%;
+	max-height: 35px;
+	max-width: 35px;
 	border-radius: 10px;
 }
 
@@ -122,7 +93,6 @@ body {
 }
 
 .dice__container {
-	/*margin: 0 15px;*/
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -156,7 +126,6 @@ body {
 
 .resultmessage__container {
 	align-items: center;
-	/*justify-content: center;*/
 	text-align: center;
 	width: 35%;
 	border-left: 3px solid #f1f1f1;
@@ -169,7 +138,6 @@ body {
 .resultmessage_container p {
 	margin: auto;
 	width: 100%;
-	/*font-size: 40px;*/
 	overflow: hidden;
 }
 
@@ -285,7 +253,7 @@ body {
   	background-image: url('../images/landingpage-background.jpg');
 	background-size: cover;
 
-	margin-bottom: 30%;
+/*	margin-bottom: 30%;*/
 }
 
 /* Modal Content/Box */
@@ -297,7 +265,6 @@ body {
   	width: 80%; /* Could be more or less, depending on screen size */
   	display: flex;
   	border-radius: 50px;
-
 	color: #f1f1f1;
 	background-image: url('../images/landingpage-background.jpg');
 	background-size: cover;
@@ -307,7 +274,7 @@ body {
 
 .landingpage__modal {
 	z-index: 11; 
- 	display: block;  /* none to test; CHANGE BACK TO BLOCK later */
+ 	display: block; 
 }
 
 .landingpage__header {
@@ -358,15 +325,15 @@ body {
 	font-size: 17px;
 }
 
-/*.charselect__section > p {
-	font-size: 17px;
-}*/
-
 .charselect__section:hover{
 	transform: scale(1.1);
 }
 
 /* =================================== Store Modal =================================== */
+
+.store__screen {
+	margin-top: 5%;
+}
 
 .store__modal {
 	display: none;
@@ -442,6 +409,3 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
-
-
-
