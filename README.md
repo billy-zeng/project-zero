@@ -8,7 +8,7 @@
 
 ![Wireframe](assets/wireframe.jpeg)
 
-// == User Stories/Game Logic == //
+# User Stories/Game Logic
 
 <!-- Intro -->
 - When the page loads, a modal pops up introducing game and explaining the rules (or leave it up as an aside)
@@ -55,7 +55,7 @@
 
 <!-------------------------------------------------------------------------------------------------------->
 
-// == Milestones == //
+# Milestones
 
 1. Build base player and game board objects
 2. Build base game logic for die rolls, moving spaces, event checks
@@ -66,7 +66,7 @@
 
 <!-------------------------------------------------------------------------------------------------------->
 
-// == Stretch Goals == //
+# Stretch Goals
 
 1. Transform (scale the coins and stars count displayed) whenever they are added 
 2. Animate 3D dice rolls
@@ -75,7 +75,7 @@
 
 <!-------------------------------------------------------------------------------------------------------->
 
-// == Minimum Viable Product == //
+# Minimum Viable Product
 
 My goal is to create a game in which 2 players play for 15 rounds, taking turns rolling two die and moving spaces on the game board according to the numbers rolled. The players select from 4 characters which each have their own different dice block with different outcomes. When a player's piece lands on a space after their dice roll, an event is activated depending on the color of the space (green, red, yellow, or blue). The events may either move the player back or forward 1 or 2 spaces, give the player 1 to 5 coins or allow the player to access the store. A star appears at a random spot on the board at the beginning of the game and respawns at another randomn spot on the board when captured (only 1 star is present on the board at any given time). The objective of the game is to capture the most stars by the end of the 15 rounds. Remaining coins are converted into stars at a ratio of 15/1. The player with the most stars is declared the winner. 
 
